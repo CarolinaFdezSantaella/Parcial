@@ -7,10 +7,8 @@ import { Skeleton } from './ui/skeleton';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { User as UserIcon } from 'lucide-react';
 import { Button } from './ui/button';
-import { useTranslations } from 'next-intl';
 
 export function AuthStatus() {
-  const t = useTranslations('AuthStatus');
   const auth = useAuth();
   const { user, isUserLoading } = useUser();
 
@@ -39,7 +37,7 @@ export function AuthStatus() {
         </Avatar>
         <div className="text-sm">
           <p className="font-medium">
-            {user.isAnonymous ? t('guestUser') : user.email}
+            {user.isAnonymous ? 'Guest User' : user.email}
           </p>
           <p className="text-xs text-sidebar-foreground/70">UID: {user.uid.slice(0,6)}...</p>
         </div>
@@ -49,7 +47,7 @@ export function AuthStatus() {
 
   return (
     <Button onClick={() => initiateAnonymousSignIn(auth)} variant="outline">
-      {t('signInAnonymously')}
+      Sign In Anonymously
     </Button>
   );
 }

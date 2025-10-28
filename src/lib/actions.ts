@@ -4,15 +4,6 @@ import { playAIBasicOpponent } from '@/ai/flows/play-ai-basic-opponent';
 import { getAiExplanationFlow } from '@/ai/flows/get-ai-explanation';
 import { z } from 'zod';
 import { Chess } from 'chess.js';
-import { getLocale } from 'next-intl/server';
-import {createTranslator} from 'next-intl';
-
-async function getTranslationsForAction() {
-  const locale = await getLocale();
-  const messages = (await import(`../messages/${locale}.json`)).default;
-  return createTranslator({locale, messages});
-}
-
 
 const playSchema = z.object({
   userMove: z.string().min(1),
@@ -20,7 +11,6 @@ const playSchema = z.object({
 });
 
 export async function getAiMove(prevState: any, formData: FormData) {
-  const t = await getTranslationsForAction();
   
   const validatedFields = playSchema.safeParse({
     userMove: formData.get('userMove'),
@@ -31,7 +21,7 @@ export async function getAiMove(prevState: any, formData: FormData) {
     const error = validatedFields.error.flatten().fieldErrors;
     return {
       aiMove: null,
-      error: error.userMove?.[0] || error.history?.[0] || t('PlayPage.toast.invalidInput'),
+      error: error.userMove?.[0] || error.history?.[0] || 'Invalid input.',
     };
   }
   
@@ -44,23 +34,23 @@ export async function getAiMove(prevState: any, formData: FormData) {
         history = parsedHistory;
     }
   } catch (e) {
-    return { aiMove: null, error: t('PlayPage.toast.corruptedHistory') };
+    return { aiMove: null, error: 'Corrupted game history. Please restart.' };
   }
 
   const game = new Chess();
   try {
     history.forEach(move => {
       if (game.move(move) === null) {
-        throw new Error(t('PlayPage.toast.invalidHistoryMove', { move }));
+        throw new Error(`Invalid move in history: ${move}`);
       }
     });
   } catch (e: any) {
-    return { aiMove: null, error: e.message || t('PlayPage.toast.historyValidationError') };
+    return { aiMove: null, error: e.message || 'An error occurred validating history.' };
   }
 
   const gameCopyForUserMove = new Chess(game.fen());
   if (gameCopyForUserMove.move(userMove) === null) {
-    return { aiMove: null, error: t('PlayPage.toast.invalidMove.description', { move: userMove })};
+    return { aiMove: null, error: `The move "${userMove}" is not valid. Please try again.`};
   }
 
   try {
@@ -73,26 +63,24 @@ export async function getAiMove(prevState: any, formData: FormData) {
     const gameCopyForAiMove = new Chess(gameCopyForUserMove.fen());
     if (!response.aiMove || gameCopyForAiMove.move(response.aiMove) === null) {
       console.error("AI returned invalid move:", response.aiMove, "for FEN:", gameCopyForAiMove.fen());
-      return { aiMove: null, error: t('PlayPage.toast.aiInvalidMove') };
+      return { aiMove: null, error: 'The AI provided an invalid move. This might be a bug. Try a different move.' };
     }
     
     return { aiMove: response.aiMove, error: null };
   } catch (error: any) {
     console.error("Error getting AI move:", error);
     if (error.message && (error.message.includes('GEMINI_API_KEY') || error.message.includes('GOOGLE_API_KEY'))) {
-        return { aiMove: null, error: t('actions.apiKeyError') };
+        return { aiMove: null, error: "Missing or invalid API Key. Please set your GOOGLE_API_KEY in the .env file." };
     }
-    return { aiMove: null, error: error.message || t('actions.aiResponseError') };
+    return { aiMove: null, error: error.message || 'Failed to get a response from the AI. Please try again.' };
   }
 }
 
 const learnSchema = z.object({
-  topic: z.string().min(3),
+  topic: z.string().min(3, { message: "Question must be at least 3 characters."}),
 });
 
 export async function getAiExplanation(prevState: any, formData: FormData) {
-  const t = await getTranslationsForAction();
-
   const validatedFields = learnSchema.safeParse({
     topic: formData.get('topic'),
   });
@@ -100,7 +88,7 @@ export async function getAiExplanation(prevState: any, formData: FormData) {
   if (!validatedFields.success) {
     return { 
       explanation: null, 
-      error: validatedFields.error.flatten().fieldErrors.topic?.[0] || t('LearnPage.toast.invalidInput')
+      error: validatedFields.error.flatten().fieldErrors.topic?.[0] || "Invalid input."
     };
   }
 
@@ -110,9 +98,9 @@ export async function getAiExplanation(prevState: any, formData: FormData) {
   } catch (error: any) {
     console.error("Error getting AI explanation:", error);
     if (error.message && (error.message.includes('GEMINI_API_KEY') || error.message.includes('GOOGLE_API_KEY'))) {
-        return { explanation: null, error: t('actions.apiKeyError') };
+        return { explanation: null, error: "Missing or invalid API Key. Please set your GOOGLE_API_KEY in the .env file." };
     }
-    return { explanation: null, error: error.message || t('actions.aiResponseError') };
+    return { explanation: null, error: error.message || 'Failed to get a response from the AI. Please try again.' };
   }
 }
 
@@ -124,7 +112,6 @@ const gameLogSchema = z.object({
 });
 
 export async function saveGameLog(prevState: any, formData: FormData) {
-  const t = await getTranslationsForAction();
   
   const validatedFields = gameLogSchema.safeParse({
     result: formData.get('result'),
@@ -136,9 +123,9 @@ export async function saveGameLog(prevState: any, formData: FormData) {
   if (!validatedFields.success) {
     const errors = validatedFields.error.flatten().fieldErrors;
     const errorMessages = {
-      result: errors.result?.[0] ? t('MyGamesPage.errors.result') : undefined,
-      duration: errors.duration?.[0] ? t('MyGamesPage.errors.duration') : undefined,
-      openingMoves: errors.openingMoves?.[0] ? t('MyGamesPage.errors.openingMoves') : undefined,
+      result: errors.result?.[0] ? "Please select a game result." : undefined,
+      duration: errors.duration?.[0] ? "Duration must be a positive number." : undefined,
+      openingMoves: errors.openingMoves?.[0] ? "Opening moves are required." : undefined,
     }
 
     return { 
