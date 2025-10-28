@@ -30,7 +30,7 @@ const generateChessExplanationPrompt = ai.definePrompt({
   name: 'generateChessExplanationPrompt',
   input: {schema: GenerateChessExplanationInputSchema},
   output: {schema: GenerateChessExplanationOutputSchema},
-  prompt: `You are an expert chess instructor. Explain the following chess topic in a clear and concise manner:
+  prompt: `You are an expert chess instructor. Explain the following chess topic in a clear, concise, and easy-to-understand manner. The explanation should be in Spanish.
 
 Topic: {{{topic}}}
 `,

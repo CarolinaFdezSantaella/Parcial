@@ -43,6 +43,7 @@ export default function PlayPage() {
     const [history, setHistory] = useState<Move[]>([]);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
+    const hiddenHistoryRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (state?.error) {
@@ -54,10 +55,17 @@ export default function PlayPage() {
         }
         if (state?.aiMove) {
             const lastUserMove = formRef.current?.move.value;
-            setHistory(prev => [...prev, { user: lastUserMove, ai: state.aiMove as string }]);
+            if (lastUserMove) {
+                const newHistory = [...history, { user: lastUserMove, ai: state.aiMove as string }];
+                setHistory(newHistory);
+                if (hiddenHistoryRef.current) {
+                    const flatHistory = newHistory.flatMap(turn => [turn.user, turn.ai]);
+                    hiddenHistoryRef.current.value = JSON.stringify(flatHistory);
+                }
+            }
             formRef.current?.reset();
         }
-    }, [state, toast]);
+    }, [state, toast, history]);
 
     return (
         <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
@@ -108,6 +116,7 @@ export default function PlayPage() {
                     </CardContent>
                     <CardFooter>
                         <form action={dispatch} ref={formRef} className="w-full space-y-4">
+                            <input type="hidden" name="history" ref={hiddenHistoryRef} value="[]" />
                             <div className="flex flex-col sm:flex-row gap-2">
                                 <Input name="move" placeholder="e.g., e4" required className="flex-grow"/>
                                 <SubmitButton />

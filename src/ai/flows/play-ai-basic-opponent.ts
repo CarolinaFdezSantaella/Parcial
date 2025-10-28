@@ -15,14 +15,15 @@ import {z} from 'genkit';
 const PlayAIBasicOpponentInputSchema = z.object({
   userMove: z
     .string()
-    .describe('The user\s move in chess notation (e.g., e4, Nf3, Rxa7).'),
+    .describe('The user\'s move in chess notation (e.g., e4, Nf3, Rxa7).'),
+  history: z.array(z.string()).describe('A list of moves made so far in the game, in order.'),
 });
 export type PlayAIBasicOpponentInput = z.infer<typeof PlayAIBasicOpponentInputSchema>;
 
 const PlayAIBasicOpponentOutputSchema = z.object({
   aiMove: z
     .string()
-    .describe('The AI\s response in chess notation (e.g., e5, Nc6, Qxd2).'),
+    .describe('The AI\'s response in chess notation (e.g., e5, Nc6, Qxd2).'),
 });
 export type PlayAIBasicOpponentOutput = z.infer<typeof PlayAIBasicOpponentOutputSchema>;
 
@@ -34,7 +35,18 @@ const playAIBasicOpponentPrompt = ai.definePrompt({
   name: 'playAIBasicOpponentPrompt',
   input: {schema: PlayAIBasicOpponentInputSchema},
   output: {schema: PlayAIBasicOpponentOutputSchema},
-  prompt: `You are a basic AI chess opponent. The user has made the move '{{{userMove}}}'. Respond with a valid chess move in algebraic notation. Think step by step. What pieces are available for you to move? What would be a valid response to the player's move? Respond only with the move.`, // Corrected prompt here
+  prompt: `You are a basic AI chess opponent. You are playing as black.
+The user is playing as white.
+The game history (so far) is: {{#each history}}{{{this}}}{{/each}}
+The user has just made the move '{{{userMove}}}'.
+
+Think step-by-step:
+1.  What is the current state of the board based on the history?
+2.  What pieces can you (black) legally move?
+3.  What is a reasonable and valid response to the user's move?
+4.  The move must be in Standard Algebraic Notation (SAN).
+
+Respond with only the valid chess move you will make. Do not add any other text.`,
 });
 
 const playAIBasicOpponentFlow = ai.defineFlow(

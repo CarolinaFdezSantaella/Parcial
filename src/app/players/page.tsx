@@ -1,17 +1,11 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { players } from "@/lib/data";
-import placeholderImages from '@/lib/placeholder-images.json';
-import { PlaceHolderImages } from "@/lib/placeholder-images";
+import { User } from "lucide-react";
 
 export default function PlayersPage() {
-  const getImage = (id: string) => {
-    return PlaceHolderImages.find(p => p.id === id) ?? placeholderImages.placeholderImages[0];
-  }
-
   return (
     <div className="max-w-7xl mx-auto">
       <header className="mb-8">
@@ -22,20 +16,12 @@ export default function PlayersPage() {
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {players.map((player) => {
-          const playerImage = getImage(player.profileImageId);
-          return (
+        {players.map((player) => (
             <Card key={player.id} className="flex flex-col text-center">
               <CardHeader className="items-center">
-                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20">
-                  <Image
-                    src={playerImage.imageUrl}
-                    alt={`Portrait of ${player.name}`}
-                    fill
-                    className="object-cover"
-                    data-ai-hint={playerImage.imageHint}
-                  />
-                </div>
+                 <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 bg-muted flex items-center justify-center">
+                    <User className="w-16 h-16 text-muted-foreground" />
+                 </div>
                 <CardTitle className="font-headline text-2xl pt-2">{player.name}</CardTitle>
                 <CardDescription>{player.country}</CardDescription>
               </CardHeader>
@@ -62,8 +48,7 @@ export default function PlayersPage() {
                 )}
               </CardFooter>
             </Card>
-          );
-        })}
+        ))}
       </div>
     </div>
   );
