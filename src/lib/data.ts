@@ -1,7 +1,7 @@
 export const chessRules = [
   {
     id: 'objective',
-    title: 'Objective',
+    title: 'Objective', // Will be replaced by i18n
     content: 'The objective in chess is to checkmate your opponent\'s king. Checkmate happens when the king is in a position to be captured (in "check") and cannot escape from capture.',
   },
   {

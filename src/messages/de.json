@@ -1,0 +1,221 @@
+{
+  "HomePage": {
+    "title": "Willkommen bei Chess Hub",
+    "description": "Ihre zentrale Anlaufstelle für alles rund um Schach. Lernen, spielen und erkunden Sie die Welt der Strategie.",
+    "playButton": "Ein Spiel spielen",
+    "featuresTitle": "Funktionen",
+    "features": {
+      "rules": {
+        "title": "Regeln lernen",
+        "description": "Meistern Sie die Grundlagen des Schachs mit unserem leicht verständlichen Regelwerk."
+      },
+      "play": {
+        "title": "Gegen KI spielen",
+        "description": "Testen Sie Ihre Fähigkeiten und üben Sie neue Strategien gegen unseren KI-Gegner."
+      },
+      "learn": {
+        "title": "Mit KI lernen",
+        "description": "Fragen Sie unseren KI-Experten nach Eröffnungen, Strategien und berühmten Partien."
+      },
+      "openings": {
+        "title": "Eröffnungen studieren",
+        "description": "Erkunden Sie ein Handbuch gängiger Schacheröffnungen und ihrer Strategien."
+      },
+      "tournaments": {
+        "title": "Turniere entdecken",
+        "description": "Bleiben Sie über die neuesten Schachturniere auf der ganzen Welt auf dem Laufenden."
+      },
+      "players": {
+        "title": "Spieler entdecken",
+        "description": "Erfahren Sie mehr über die besten Spieler und ihren Weg zum Großmeistertitel."
+      },
+      "championships": {
+        "title": "Meisterschafts-Geschichte",
+        "description": "Tauchen Sie ein in die reiche Geschichte der Schachweltmeisterschaften."
+      },
+      "myGames": {
+        "title": "Meine Partien",
+        "description": "Führen Sie ein persönliches Protokoll Ihrer Schachschlachten."
+      }
+    }
+  },
+  "MainNav": {
+    "home": "Startseite",
+    "rules": "Regeln",
+    "openings": "Eröffnungen",
+    "tournaments": "Turniere",
+    "players": "Spieler",
+    "championships": "Meisterschaften",
+    "play": "KI spielen",
+    "learn": "Lernen",
+    "myGames": "Meine Partien"
+  },
+  "AuthStatus": {
+    "guestUser": "Gast-Benutzer",
+    "signInAnonymously": "Anonym Anmelden"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Sprache ändern"
+  },
+  "PlayPage": {
+    "title": "Gegen KI spielen",
+    "description": "Sie sind Weiß. Geben Sie Ihren Zug in algebraischer Notation ein (z.B. e4, Sf3).",
+    "thinking": "Denken...",
+    "makeMove": "Zug machen",
+    "gameCard": {
+      "title": "Partie",
+      "description": "Zugverlauf",
+      "noMoves": "Noch keine Züge. Viel Glück!",
+      "you": "Sie",
+      "ai": "KI"
+    },
+    "restartGame": "Partie neustarten",
+    "gameOver": {
+      "title": "Spielende",
+      "generic": "Spielende.",
+      "checkmate": "Schachmatt! {winner} gewinnt.",
+      "draw": "Es ist ein Unentschieden!",
+      "stalemate": "Patt!",
+      "threefoldRepetition": "Unentschieden durch dreifache Wiederholung.",
+      "insufficientMaterial": "Unentschieden wegen unzureichenden Materials.",
+      "playAgain": "Nochmal spielen"
+    },
+    "white": "Weiß",
+    "black": "Schwarz",
+    "toast": {
+      "invalidMove": {
+        "title": "Ungültiger Zug",
+        "description": "Der Zug \"{move}\" ist ungültig. Bitte versuchen Sie es erneut."
+      },
+      "invalidFormat": {
+        "title": "Ungültiges Zugformat",
+        "description": "Der Zug \"{move}\" konnte nicht verstanden werden."
+      },
+      "aiInvalidMove": "Die KI hat einen ungültigen Zug zurückgegeben. Dies könnte ein Fehler sein. Versuchen Sie einen anderen Zug.",
+      "corruptedHistory": "Partieverlauf beschädigt. Bitte neu starten.",
+      "invalidHistoryMove": "Ungültiger Zug im Verlauf: {move}",
+      "historyValidationError": "Beim Validieren des Verlaufs ist ein Fehler aufgetreten.",
+      "invalidInput": "Ungültige Eingabe."
+    }
+  },
+  "LearnPage": {
+    "title": "Mit KI lernen",
+    "description": "Fragen Sie nach Schacheröffnungen, Strategien, berühmten Partien oder Regeln.",
+    "generating": "Generiere...",
+    "askAI": "KI fragen",
+    "formTitle": "Eine Frage stellen",
+    "formDescription": "Zum Beispiel: \"Was ist die Sizilianische Verteidigung?\" oder \"Erklären Sie die Partie Fischer gegen Spasski von 1972.\"",
+    "formPlaceholder": "Geben Sie hier Ihre Schachfrage ein...",
+    "errorTitle": "Fehler",
+    "aiExplanationTitle": "KI-Erklärung"
+  },
+  "MyGamesPage": {
+    "title": "Meine Partieprotokolle",
+    "description": "Führen Sie ein persönliches Protokoll Ihrer Schachschlachten.",
+    "saving": "Speichern...",
+    "saveLog": "Partie speichern",
+    "errorMustBeLoggedIn": "Sie müssen angemeldet sein.",
+    "authRequiredTitle": "Authentifizierung erforderlich",
+    "authRequiredDescription": "Sie müssen angemeldet sein, um Ihre Partien anzuzeigen und zu protokollieren. Ein anonymes Konto wurde für Sie erstellt. Bitte laden Sie die Seite neu, wenn Sie diese Nachricht weiterhin sehen.",
+    "newGameTitle": "Neue Partie protokollieren",
+    "newGameDescription": "Geben Sie die Details Ihrer letzten Partie ein.",
+    "resultLabel": "Partieergebnis",
+    "resultPlaceholder": "Wählen Sie ein Ergebnis",
+    "resultWin": "Gewonnen",
+    "resultLoss": "Verloren",
+    "resultDraw": "Unentschieden",
+    "durationLabel": "Dauer (Minuten)",
+    "durationPlaceholder": "z.B. 30",
+    "openingMovesLabel": "Eröffnungszüge",
+    "openingMovesPlaceholder": "z.B. 1. e4 e5 2. Sf3",
+    "notesLabel": "Notizen",
+    "notesPlaceholder": "Interessante Momente, Fehler oder Dinge zum Erinnern...",
+    "successMessage": "Partie erfolgreich gespeichert!",
+    "pastGamesTitle": "Vergangene Partien",
+    "noGamesYet": "Sie haben noch keine Partien protokolliert.",
+    "gameOn": "Partie vom {date}",
+    "minutes": "Minuten",
+    "openingLabel": "Eröffnung",
+    "errors": {
+        "result": "Bitte wählen Sie ein Ergebnis aus.",
+        "duration": "Die Dauer muss eine positive Zahl sein.",
+        "openingMoves": "Eröffnungszüge sind erforderlich."
+    }
+  },
+  "RulesPage": {
+    "title": "Schachregeln",
+    "description": "Eine umfassende Anleitung zu den Regeln, von der Grundbewegung bis zu Spezialzügen.",
+    "objective": {
+      "title": "Ziel",
+      "content": "Das Ziel beim Schach ist es, den König des Gegners schachmatt zu setzen. Schachmatt liegt vor, wenn der König im Begriff ist, geschlagen zu werden ('im Schach' steht) und der Gefangennahme nicht entkommen kann."
+    },
+    "movement": {
+      "title": "Figurenbewegung",
+      "content": "Jede der 6 verschiedenen Figuren bewegt sich unterschiedlich. Figuren können nicht durch andere Figuren ziehen (obwohl der Springer über andere Figuren springen kann) und niemals auf ein Feld mit einer eigenen Figur ziehen. Sie können jedoch auf das Feld einer gegnerischen Figur ziehen, die dann geschlagen wird. Figuren werden im Allgemeinen auf Positionen bewegt, wo sie andere Figuren schlagen, eigene Figuren verteidigen oder wichtige Felder im Spiel kontrollieren können."
+    },
+    "king": {
+      "title": "Der König",
+      "content": "Der König ist die wichtigste Figur, aber eine der schwächsten. Der König kann sich nur ein Feld in jede Richtung bewegen - nach oben, unten, zu den Seiten und diagonal."
+    },
+    "queen": {
+      "title": "Die Dame",
+      "content": "Die Dame ist die stärkste Figur. Sie kann sich in jede gerade Richtung - vorwärts, rückwärts, seitwärts oder diagonal - so weit wie möglich bewegen, solange sie nicht durch eigene Figuren zieht."
+    },
+    "rook": {
+      "title": "Der Turm",
+      "content": "Der Turm kann sich so weit bewegen, wie er möchte, aber nur vorwärts, rückwärts und seitwärts. Die Türme sind besonders mächtige Figuren, wenn sie sich gegenseitig schützen und zusammenarbeiten!"
+    },
+    "bishop": {
+      "title": "Der Läufer",
+      "content": "Der Läufer kann sich so weit bewegen, wie er möchte, aber nur diagonal. Jeder Läufer beginnt auf einer Farbe (hell oder dunkel) und muss immer auf dieser Farbe bleiben."
+    },
+    "knight": {
+      "title": "Der Springer",
+      "content": "Springer bewegen sich ganz anders als die anderen Figuren – zwei Felder in eine Richtung und dann ein weiteres Feld im 90-Grad-Winkel, genau wie die Form eines 'L'. Springer sind auch die einzigen Figuren, die über andere Figuren springen können."
+    },
+    "pawn": {
+      "title": "Der Bauer",
+      "content": "Bauern sind ungewöhnlich, weil sie sich auf unterschiedliche Weise bewegen und schlagen: Sie bewegen sich vorwärts, schlagen aber diagonal. Bauern können sich nur ein Feld auf einmal vorwärts bewegen, außer bei ihrem allerersten Zug, wo sie zwei Felder vorwärts ziehen können. Bauern können nur ein Feld diagonal vor ihnen schlagen."
+    },
+    "castling": {
+      "title": "Rochade",
+      "content": "Die Rochade ist eine Sonderregel, die es Ihnen ermöglicht, zwei wichtige Dinge in einem Zug zu tun: Ihren König in Sicherheit zu bringen und Ihren Turm aus der Ecke ins Spiel zu bringen. Ein Spieler kann seinen König zwei Felder zur Seite bewegen und dann den Turm von dieser Ecke direkt neben den König auf die gegenüberliegende Seite stellen. Es müssen jedoch Bedingungen erfüllt sein: Es muss der allererste Zug dieses Königs und dieses Turms sein, es dürfen keine Figuren zwischen ihnen stehen und der König darf nicht im Schach stehen oder durch ein angegriffenes Feld ziehen."
+    },
+    "en-passant": {
+      "title": "En Passant",
+      "content": "Wenn ein Bauer bei seinem ersten Zug zwei Felder vorrückt und dabei neben einem gegnerischen Bauern landet, hat der gegnerische Bauer die Möglichkeit, den ersten Bauern im Vorbeigehen zu schlagen. Dieser besondere Zug muss sofort ausgeführt werden, sonst verfällt die Option."
+    },
+    "pawn-promotion": {
+      "title": "Bauernumwandlung",
+      "content": "Wenn ein Bauer die andere Seite des Bretts erreicht, kann er zu jeder anderen Schachfigur (außer einem König) befördert werden. Ein Bauer wird normalerweise in eine Dame umgewandelt."
+    }
+  },
+  "OpeningsPage": {
+    "title": "Leitfaden für Schacheröffnungen",
+    "description": "Ein umfassendes Handbuch zu gängigen und effektiven Schacheröffnungen.",
+    "strategyWhite": "Strategie für Weiß",
+    "strategyBlack": "Strategie für Schwarz"
+  },
+  "TournamentsPage": {
+    "title": "Kommende Turniere",
+    "description": "Bleiben Sie über die wichtigsten Ereignisse in der professionellen Schachwelt auf dem Laufenden.",
+    "visitWebsite": "Webseite besuchen"
+  },
+  "PlayersPage": {
+    "title": "Legendäre Spieler",
+    "description": "Entdecken Sie die Ikonen, die das Schachspiel geprägt haben.",
+    "chesscomProfile": "Chess.com Profil",
+    "lichessProfile": "Lichess.org Profil"
+  },
+  "ChampionshipsPage": {
+    "title": "Schachweltmeisterschaften",
+    "description": "Ein Rückblick auf die denkwürdigsten Titelkämpfe der Schachgeschichte.",
+    "matchTitle": "Schachweltmeisterschaft {year}",
+    "winner": "Gewinner",
+    "loser": "Besiegt"
+  },
+  "actions": {
+    "apiKeyError": "Fehlender oder ungültiger API-Schlüssel. Bitte setzen Sie Ihren GOOGLE_API_KEY in der .env-Datei.",
+    "aiResponseError": "Antwort von der KI konnte nicht empfangen werden. Bitte versuchen Sie es erneut."
+  }
+}

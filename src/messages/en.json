@@ -1,0 +1,224 @@
+{
+  "HomePage": {
+    "title": "Welcome to Chess Hub",
+    "description": "Your one-stop destination for everything chess. Learn, play, and explore the world of strategy.",
+    "playButton": "Play a Game",
+    "featuresTitle": "Features",
+    "features": {
+      "rules": {
+        "title": "Learn the Rules",
+        "description": "Master the fundamentals of chess with our easy-to-understand rulebook."
+      },
+      "play": {
+        "title": "Play Against AI",
+        "description": "Test your skills and practice new strategies against our AI opponent."
+      },
+      "learn": {
+        "title": "Learn with AI",
+        "description": "Ask our AI expert about openings, strategies, and famous games."
+      },
+      "openings": {
+        "title": "Study Openings",
+        "description": "Explore a manual of common chess openings and their strategies."
+      },
+      "tournaments": {
+        "title": "Explore Tournaments",
+        "description": "Stay up-to-date with the latest chess tournaments around the world."
+      },
+      "players": {
+        "title": "Discover Players",
+        "description": "Learn about the top players and their journey to grandmaster status."
+      },
+      "championships": {
+        "title": "Championship History",
+        "description": "Dive into the rich history of the World Chess Championships."
+      },
+      "myGames": {
+        "title": "My Game Logs",
+        "description": "Keep a personal record of your chess battles."
+      }
+    }
+  },
+  "MainNav": {
+    "home": "Home",
+    "rules": "Rules",
+    "openings": "Openings",
+    "tournaments": "Tournaments",
+    "players": "Players",
+    "championships": "Championships",
+    "play": "Play AI",
+    "learn": "Learn",
+    "myGames": "My Games"
+  },
+  "AuthStatus": {
+    "guestUser": "Guest User",
+    "signInAnonymously": "Sign In Anonymously"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Change Language"
+  },
+  "PlayPage": {
+    "title": "Play Against AI",
+    "description": "You are White. Enter your move in algebraic notation (e.g., e4, Nf3).",
+    "thinking": "Thinking...",
+    "makeMove": "Make Move",
+    "gameCard": {
+      "title": "Game",
+      "description": "Move history",
+      "noMoves": "No moves yet. Good luck!",
+      "you": "You",
+      "ai": "AI"
+    },
+    "restartGame": "Restart Game",
+    "gameOver": {
+      "title": "Game Over",
+      "generic": "Game Over.",
+      "checkmate": "Checkmate! {winner} wins.",
+      "draw": "It's a draw!",
+      "stalemate": "Stalemate!",
+      "threefoldRepetition": "Draw by threefold repetition.",
+      "insufficientMaterial": "Draw by insufficient material.",
+      "playAgain": "Play Again"
+    },
+    "white": "White",
+    "black": "Black",
+    "toast": {
+      "invalidMove": {
+        "title": "Invalid Move",
+        "description": "The move \"{move}\" is not valid. Please try again."
+      },
+      "invalidFormat": {
+        "title": "Invalid Move Format",
+        "description": "The move \"{move}\" could not be understood."
+      },
+      "aiInvalidMove": "The AI provided an invalid move. This might be a bug. Try a different move.",
+      "corruptedHistory": "Corrupted game history. Please restart.",
+      "invalidHistoryMove": "Invalid move in history: {move}",
+      "historyValidationError": "An error occurred validating history.",
+      "invalidInput": "Invalid input."
+    }
+  },
+  "LearnPage": {
+    "title": "Learn with AI",
+    "description": "Ask about chess openings, strategies, famous games, or rules.",
+    "generating": "Generating...",
+    "askAI": "Ask AI",
+    "formTitle": "Ask a Question",
+    "formDescription": "For example: \"What is the Sicilian Defense?\" or \"Explain the 1972 Fischer vs. Spassky match.\"",
+    "formPlaceholder": "Type your chess-related question here...",
+    "errorTitle": "Error",
+    "aiExplanationTitle": "AI Explanation",
+    "toast": {
+      "invalidInput": "Question must be at least 3 characters."
+    }
+  },
+  "MyGamesPage": {
+    "title": "My Game Logs",
+    "description": "Keep a personal record of your chess battles.",
+    "saving": "Saving...",
+    "saveLog": "Save Game Log",
+    "errorMustBeLoggedIn": "You must be logged in.",
+    "authRequiredTitle": "Authentication Required",
+    "authRequiredDescription": "You must be signed in to view and log your games. An anonymous account has been created for you. Please refresh the page if you still see this message.",
+    "newGameTitle": "Log a New Game",
+    "newGameDescription": "Fill in the details of your last match.",
+    "resultLabel": "Game Result",
+    "resultPlaceholder": "Select a result",
+    "resultWin": "I Won",
+    "resultLoss": "I Lost",
+    "resultDraw": "Draw",
+    "durationLabel": "Duration (minutes)",
+    "durationPlaceholder": "e.g., 30",
+    "openingMovesLabel": "Opening Moves",
+    "openingMovesPlaceholder": "e.g., 1. e4 e5 2. Nf3",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Any interesting moments, mistakes, or things to remember...",
+    "successMessage": "Game log saved successfully!",
+    "pastGamesTitle": "Past Games",
+    "noGamesYet": "You haven't logged any games yet.",
+    "gameOn": "Game on {date}",
+    "minutes": "minutes",
+    "openingLabel": "Opening",
+    "errors": {
+        "result": "Please select a game result.",
+        "duration": "Duration must be a positive number.",
+        "openingMoves": "Opening moves are required."
+    }
+  },
+  "RulesPage": {
+    "title": "Rules of Chess",
+    "description": "A comprehensive guide to the rules, from basic movement to special moves.",
+    "objective": {
+      "title": "Objective",
+      "content": "The objective in chess is to checkmate your opponent's king. Checkmate happens when the king is in a position to be captured (in 'check') and cannot escape from capture."
+    },
+    "movement": {
+      "title": "Piece Movement",
+      "content": "Each of the 6 different kinds of pieces moves differently. Pieces cannot move through other pieces (though the knight can jump over other pieces), and can never move onto a square with one of their own pieces. However, they can be moved to take the place of an opponent's piece which is then captured. Pieces are generally moved into positions where they can capture other pieces (by landing on their square and then replacing them), defend their own pieces in case of capture, or control important squares in the game."
+    },
+    "king": {
+      "title": "The King",
+      "content": "The king is the most important piece, but is one of the weakest. The king can only move one square in any direction - up, down, to the sides, and diagonally."
+    },
+    "queen": {
+      "title": "The Queen",
+      "content": "The queen is the most powerful piece. She can move in any one straight direction - forward, backward, sideways, or diagonally - as far as possible as long as she does not move through any of her own pieces."
+    },
+    "rook": {
+      "title": "The Rook",
+      "content": "The rook may move as far as it wants, but only forward, backward, and to the sides. The rooks are particularly powerful pieces when they are protecting each other and working together!"
+    },
+    "bishop": {
+      "title": "The Bishop",
+      "content": "The bishop may move as far as it wants, but only diagonally. Each bishop starts on one color (light or dark) and must always stay on that color."
+    },
+    "knight": {
+      "title": "The Knight",
+      "content": "Knights move in a very different way from the other pieces – going two squares in one direction, and then one more move at a 90 degree angle, just like the shape of an “L”. Knights are also the only pieces that can move over other pieces."
+    },
+    "pawn": {
+      "title": "The Pawn",
+      "content": "Pawns are unusual because they move and capture in different ways: they move forward, but capture diagonally. Pawns can only move forward one square at a time, except for their very first move where they can move forward two squares. Pawns can only capture one square diagonally in front of them."
+    },
+    "castling": {
+      "title": "Castling",
+      "content": "Castling is a special rule that allows you to do two important things in one move: get your king to safety (hopefully), and get your rook out of the corner and into the game. On a player's turn he may move his king two squares over to one side and then move the rook from that side's corner to right next to the king on the opposite side. However, the following conditions must be met: it must be that king's very first move, it must be that rook's very first move, there cannot be any pieces between the king and the rook, and the king may not be in check or pass through check."
+    },
+    "en-passant": {
+      "title": "En Passant",
+      "content": "If a pawn moves out two squares on its first move, and by doing so lands to the side of an opponent's pawn, the opponent's pawn has the option of capturing the first pawn as it passes by. This special move must be done immediately after the first pawn has moved past, otherwise the option to capture it is no longer available."
+    },
+    "pawn-promotion": {
+      "title": "Pawn Promotion",
+      "content": "If a pawn reaches the other side of the board, it can become any other chess piece (called promotion) except for a king. A pawn is usually promoted to a queen."
+    }
+  },
+  "OpeningsPage": {
+    "title": "Chess Openings Guide",
+    "description": "An extensive manual on common and effective chess openings.",
+    "strategyWhite": "Strategy for White",
+    "strategyBlack": "Strategy for Black"
+  },
+  "TournamentsPage": {
+    "title": "Upcoming Tournaments",
+    "description": "Stay updated with the major events in the professional chess world.",
+    "visitWebsite": "Visit Website"
+  },
+  "PlayersPage": {
+    "title": "Legendary Players",
+    "description": "Discover the icons who have shaped the game of chess.",
+    "chesscomProfile": "Chess.com Profile",
+    "lichessProfile": "Lichess.org Profile"
+  },
+  "ChampionshipsPage": {
+    "title": "World Chess Championships",
+    "description": "A look back at the most memorable title matches in chess history.",
+    "matchTitle": "World Chess Championship {year}",
+    "winner": "Winner",
+    "loser": "Defeated"
+  },
+  "actions": {
+    "apiKeyError": "Missing or invalid API Key. Please set your GOOGLE_API_KEY in the .env file.",
+    "aiResponseError": "Failed to get a response from the AI. Please try again."
+  }
+}

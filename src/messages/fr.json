@@ -1,0 +1,221 @@
+{
+  "HomePage": {
+    "title": "Bienvenue sur Chess Hub",
+    "description": "Votre destination unique pour tout ce qui concerne les échecs. Apprenez, jouez et explorez le monde de la stratégie.",
+    "playButton": "Jouer une Partie",
+    "featuresTitle": "Fonctionnalités",
+    "features": {
+      "rules": {
+        "title": "Apprendre les Règles",
+        "description": "Maîtrisez les bases des échecs avec notre livret de règles facile à comprendre."
+      },
+      "play": {
+        "title": "Jouer contre l'IA",
+        "description": "Testez vos compétences et pratiquez de nouvelles stratégies contre notre adversaire IA."
+      },
+      "learn": {
+        "title": "Apprendre avec l'IA",
+        "description": "Interrogez notre expert IA sur les ouvertures, les stratégies et les parties célèbres."
+      },
+      "openings": {
+        "title": "Étudier les Ouvertures",
+        "description": "Explorez un manuel des ouvertures d'échecs courantes et de leurs stratégies."
+      },
+      "tournaments": {
+        "title": "Explorer les Tournois",
+        "description": "Restez à jour avec les derniers tournois d'échecs du monde entier."
+      },
+      "players": {
+        "title": "Découvrir les Joueurs",
+        "description": "Découvrez les meilleurs joueurs et leur parcours pour devenir grand maître."
+      },
+      "championships": {
+        "title": "Histoire des Championnats",
+        "description": "Plongez dans la riche histoire des Championnats du Monde d'Échecs."
+      },
+      "myGames": {
+        "title": "Mes Parties",
+        "description": "Tenez un registre personnel de vos batailles échiquéennes."
+      }
+    }
+  },
+  "MainNav": {
+    "home": "Accueil",
+    "rules": "Règles",
+    "openings": "Ouvertures",
+    "tournaments": "Tournois",
+    "players": "Joueurs",
+    "championships": "Championnats",
+    "play": "Jouer IA",
+    "learn": "Apprendre",
+    "myGames": "Mes Parties"
+  },
+  "AuthStatus": {
+    "guestUser": "Utilisateur Invité",
+    "signInAnonymously": "Se Connecter Anonymement"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Changer de Langue"
+  },
+  "PlayPage": {
+    "title": "Jouer contre l'IA",
+    "description": "Vous êtes les Blancs. Entrez votre coup en notation algébrique (ex. e4, Cf3).",
+    "thinking": "Réflexion...",
+    "makeMove": "Jouer le Coup",
+    "gameCard": {
+      "title": "Partie",
+      "description": "Historique des coups",
+      "noMoves": "Aucun coup pour l'instant. Bonne chance !",
+      "you": "Vous",
+      "ai": "IA"
+    },
+    "restartGame": "Recommencer la Partie",
+    "gameOver": {
+      "title": "Partie Terminée",
+      "generic": "Partie Terminée.",
+      "checkmate": "Échec et mat ! Les {winner} gagnent.",
+      "draw": "C'est une partie nulle !",
+      "stalemate": "Pat !",
+      "threefoldRepetition": "Nulle par triple répétition.",
+      "insufficientMaterial": "Nulle par matériel insuffisant.",
+      "playAgain": "Rejouer"
+    },
+    "white": "Blancs",
+    "black": "Noirs",
+    "toast": {
+      "invalidMove": {
+        "title": "Coup Invalide",
+        "description": "Le coup \"{move}\" n'est pas valide. Veuillez réessayer."
+      },
+      "invalidFormat": {
+        "title": "Format de Coup Invalide",
+        "description": "Le coup \"{move}\" n'a pas pu être compris."
+      },
+      "aiInvalidMove": "L'IA a fourni un coup invalide. Il pourrait s'agir d'un bug. Essayez un autre coup.",
+      "corruptedHistory": "Historique de la partie corrompu. Veuillez recommencer.",
+      "invalidHistoryMove": "Coup invalide dans l'historique : {move}",
+      "historyValidationError": "Une erreur s'est produite lors de la validation de l'historique.",
+      "invalidInput": "Entrée invalide."
+    }
+  },
+  "LearnPage": {
+    "title": "Apprendre avec l'IA",
+    "description": "Posez des questions sur les ouvertures, les stratégies, les parties célèbres ou les règles.",
+    "generating": "Génération...",
+    "askAI": "Demander à l'IA",
+    "formTitle": "Poser une Question",
+    "formDescription": "Par exemple : \"Qu'est-ce que la Défense Sicilienne ?\" ou \"Expliquez la partie Fischer contre Spassky de 1972.\"",
+    "formPlaceholder": "Tapez votre question sur les échecs ici...",
+    "errorTitle": "Erreur",
+    "aiExplanationTitle": "Explication de l'IA"
+  },
+  "MyGamesPage": {
+    "title": "Mon Journal de Parties",
+    "description": "Conservez un enregistrement personnel de vos batailles d'échecs.",
+    "saving": "Enregistrement...",
+    "saveLog": "Sauvegarder la Partie",
+    "errorMustBeLoggedIn": "Vous devez être connecté.",
+    "authRequiredTitle": "Authentification Requise",
+    "authRequiredDescription": "Vous devez être connecté pour voir et enregistrer vos parties. Un compte anonyme a été créé pour vous. Veuillez rafraîchir la page si vous voyez toujours ce message.",
+    "newGameTitle": "Enregistrer une Nouvelle Partie",
+    "newGameDescription": "Remplissez les détails de votre dernière partie.",
+    "resultLabel": "Résultat de la Partie",
+    "resultPlaceholder": "Sélectionnez un résultat",
+    "resultWin": "J'ai Gagné",
+    "resultLoss": "J'ai Perdu",
+    "resultDraw": "Nulle",
+    "durationLabel": "Durée (minutes)",
+    "durationPlaceholder": "ex: 30",
+    "openingMovesLabel": "Coups d'Ouverture",
+    "openingMovesPlaceholder": "ex: 1. e4 e5 2. Cf3",
+    "notesLabel": "Notes",
+    "notesPlaceholder": "Moments intéressants, erreurs, ou choses à retenir...",
+    "successMessage": "Partie enregistrée avec succès !",
+    "pastGamesTitle": "Parties Précédentes",
+    "noGamesYet": "Vous n'avez encore enregistré aucune partie.",
+    "gameOn": "Partie du {date}",
+    "minutes": "minutes",
+    "openingLabel": "Ouverture",
+    "errors": {
+        "result": "Veuillez sélectionner un résultat.",
+        "duration": "La durée doit être un nombre positif.",
+        "openingMoves": "Les coups d'ouverture sont requis."
+    }
+  },
+  "RulesPage": {
+    "title": "Règles des Échecs",
+    "description": "Un guide complet des règles, du mouvement de base aux coups spéciaux.",
+    "objective": {
+      "title": "Objectif",
+      "content": "L'objectif aux échecs est de mettre en échec et mat le roi de votre adversaire. L'échec et mat se produit lorsque le roi est en position d'être capturé (en 'échec') et ne peut pas échapper à la capture."
+    },
+    "movement": {
+      "title": "Mouvement des Pièces",
+      "content": "Chacune des 6 sortes de pièces se déplace différemment. Les pièces ne peuvent pas se déplacer à travers d'autres pièces (bien que le cavalier puisse sauter par-dessus), et ne peuvent jamais se déplacer sur une case occupée par une de leurs propres pièces. Elles peuvent cependant prendre la place d'une pièce adverse, qui est alors capturée. Les pièces sont généralement déplacées vers des positions où elles peuvent capturer d'autres pièces, défendre leurs propres pièces ou contrôler des cases importantes."
+    },
+    "king": {
+      "title": "Le Roi",
+      "content": "Le roi est la pièce la plus importante, mais l'une des plus faibles. Le roi ne peut se déplacer que d'une seule case dans n'importe quelle direction : vers le haut, le bas, sur les côtés et en diagonale."
+    },
+    "queen": {
+      "title": "La Dame",
+      "content": "La dame est la pièce la plus puissante. Elle peut se déplacer dans n'importe quelle direction rectiligne - avant, arrière, latérale ou diagonale - aussi loin que possible tant qu'elle ne traverse pas ses propres pièces."
+    },
+    "rook": {
+      "title": "La Tour",
+      "content": "La tour peut se déplacer aussi loin qu'elle le souhaite, mais uniquement vers l'avant, l'arrière et sur les côtés. Les tours sont des pièces particulièrement puissantes lorsqu'elles se protègent mutuellement et travaillent ensemble !"
+    },
+    "bishop": {
+      "title": "Le Fou",
+      "content": "Le fou peut se déplacer aussi loin qu'il le souhaite, mais uniquement en diagonale. Chaque fou commence sur une couleur (claire ou foncée) et doit toujours rester sur cette couleur."
+    },
+    "knight": {
+      "title": "Le Cavalier",
+      "content": "Les cavaliers se déplacent d'une manière très différente des autres pièces - de deux cases dans une direction, puis d'une case de plus à un angle de 90 degrés, comme la forme d'un 'L'. Les cavaliers sont aussi les seules pièces qui peuvent sauter par-dessus d'autres pièces."
+    },
+    "pawn": {
+      "title": "Le Pion",
+      "content": "Les pions sont inhabituels car ils se déplacent et capturent de différentes manières : ils avancent, mais capturent en diagonale. Les pions ne peuvent avancer que d'une case à la fois, sauf pour leur tout premier coup où ils peuvent avancer de deux cases. Les pions ne peuvent capturer qu'une case en diagonale devant eux."
+    },
+    "castling": {
+      "title": "Le Roque",
+      "content": "Le roque est une règle spéciale qui vous permet de faire deux choses importantes en un seul coup : mettre votre roi en sécurité et sortir votre tour du coin pour la mettre en jeu. Un joueur peut déplacer son roi de deux cases vers un côté, puis déplacer la tour de ce coin juste à côté du roi, du côté opposé. Cependant, des conditions doivent être remplies : ce doit être le tout premier coup de ce roi et de cette tour, il ne doit y avoir aucune pièce entre eux, et le roi ne doit pas être en échec ni passer par une case attaquée."
+    },
+    "en-passant": {
+      "title": "La Prise en Passant",
+      "content": "Si un pion avance de deux cases lors de son premier coup et se retrouve à côté d'un pion adverse, celui-ci a la possibilité de capturer le premier pion comme s'il n'avait avancé que d'une seule case. Ce coup spécial doit être effectué immédiatement après, sinon l'option est perdue."
+    },
+    "pawn-promotion": {
+      "title": "La Promotion du Pion",
+      "content": "Si un pion atteint l'autre côté de l'échiquier, il peut devenir n'importe quelle autre pièce (sauf un roi). En général, un pion est promu en dame."
+    }
+  },
+  "OpeningsPage": {
+    "title": "Guide des Ouvertures d'Échecs",
+    "description": "Un manuel complet sur les ouvertures d'échecs courantes et efficaces.",
+    "strategyWhite": "Stratégie pour les Blancs",
+    "strategyBlack": "Stratégie pour les Noirs"
+  },
+  "TournamentsPage": {
+    "title": "Tournois à Venir",
+    "description": "Restez informé des événements majeurs dans le monde des échecs professionnels.",
+    "visitWebsite": "Visiter le Site Web"
+  },
+  "PlayersPage": {
+    "title": "Joueurs de Légende",
+    "description": "Découvrez les icônes qui ont façonné le jeu d'échecs.",
+    "chesscomProfile": "Profil Chess.com",
+    "lichessProfile": "Profil Lichess.org"
+  },
+  "ChampionshipsPage": {
+    "title": "Championnats du Monde d'Échecs",
+    "description": "Un aperçu des matchs pour le titre les plus mémorables de l'histoire des échecs.",
+    "matchTitle": "Championnat du Monde d'Échecs {year}",
+    "winner": "Gagnant",
+    "loser": "Perdant"
+  },
+  "actions": {
+    "apiKeyError": "Clé API manquante ou invalide. Veuillez définir votre GOOGLE_API_KEY dans le fichier .env.",
+    "aiResponseError": "Échec de la réception d'une réponse de l'IA. Veuillez réessayer."
+  }
+}

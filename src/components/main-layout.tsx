@@ -2,10 +2,10 @@ import React from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarInset, SidebarTrigger, SidebarContent, SidebarFooter } from "@/components/ui/sidebar";
 import { MainNav } from "@/components/main-nav";
 import { Logo } from "@/components/icons/logo";
-import { Button } from './ui/button';
 import Link from 'next/link';
 import { AuthStatus } from './auth-status';
 import { SidebarSeparator } from './ui/sidebar';
+import { LanguageSwitcher } from './language-switcher';
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -30,6 +30,7 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
           <MainNav />
         </SidebarContent>
         <SidebarFooter className='group-data-[collapsible=icon]:hidden'>
+            <LanguageSwitcher />
             <SidebarSeparator />
             <AuthStatus />
         </SidebarFooter>

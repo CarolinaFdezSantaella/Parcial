@@ -1,0 +1,221 @@
+{
+  "HomePage": {
+    "title": "Bienvenido a Chess Hub",
+    "description": "Tu destino único para todo lo relacionado con el ajedrez. Aprende, juega y explora el mundo de la estrategia.",
+    "playButton": "Jugar una Partida",
+    "featuresTitle": "Características",
+    "features": {
+      "rules": {
+        "title": "Aprende las Reglas",
+        "description": "Domina los fundamentos del ajedrez con nuestro libro de reglas fácil de entender."
+      },
+      "play": {
+        "title": "Juega contra la IA",
+        "description": "Pon a prueba tus habilidades y practica nuevas estrategias contra nuestro oponente de IA."
+      },
+      "learn": {
+        "title": "Aprende con IA",
+        "description": "Pregúntale a nuestro experto en IA sobre aperturas, estrategias y partidas famosas."
+      },
+      "openings": {
+        "title": "Estudia Aperturas",
+        "description": "Explora un manual de aperturas de ajedrez comunes y sus estrategias."
+      },
+      "tournaments": {
+        "title": "Explora Torneos",
+        "description": "Mantente al día con los últimos torneos de ajedrez en todo el mundo."
+      },
+      "players": {
+        "title": "Descubre Jugadores",
+        "description": "Aprende sobre los mejores jugadores y su camino hacia el estatus de gran maestro."
+      },
+      "championships": {
+        "title": "Historia de Campeonatos",
+        "description": "Sumérgete en la rica historia de los Campeonatos Mundiales de Ajedrez."
+      },
+      "myGames": {
+        "title": "Mis Partidas",
+        "description": "Mantén un registro personal de tus batallas de ajedrez."
+      }
+    }
+  },
+  "MainNav": {
+    "home": "Inicio",
+    "rules": "Reglas",
+    "openings": "Aperturas",
+    "tournaments": "Torneos",
+    "players": "Jugadores",
+    "championships": "Campeonatos",
+    "play": "Jugar con IA",
+    "learn": "Aprender",
+    "myGames": "Mis Partidas"
+  },
+  "AuthStatus": {
+    "guestUser": "Usuario Invitado",
+    "signInAnonymously": "Iniciar Sesión Anónimamente"
+  },
+  "LanguageSwitcher": {
+    "changeLanguage": "Cambiar Idioma"
+  },
+  "PlayPage": {
+    "title": "Juega contra la IA",
+    "description": "Juegas con las blancas. Introduce tu movimiento en notación algebraica (ej. e4, Cf3).",
+    "thinking": "Pensando...",
+    "makeMove": "Hacer Movimiento",
+    "gameCard": {
+      "title": "Partida",
+      "description": "Historial de movimientos",
+      "noMoves": "Aún no hay movimientos. ¡Buena suerte!",
+      "you": "Tú",
+      "ai": "IA"
+    },
+    "restartGame": "Reiniciar Partida",
+    "gameOver": {
+      "title": "Partida Terminada",
+      "generic": "Partida Terminada.",
+      "checkmate": "¡Jaque mate! Ganan las {winner}.",
+      "draw": "¡Es un empate!",
+      "stalemate": "¡Tablas por ahogado!",
+      "threefoldRepetition": "Empate por triple repetición.",
+      "insufficientMaterial": "Empate por material insuficiente.",
+      "playAgain": "Jugar de Nuevo"
+    },
+    "white": "Blancas",
+    "black": "Negras",
+    "toast": {
+      "invalidMove": {
+        "title": "Movimiento Inválido",
+        "description": "El movimiento \"{move}\" no es válido. Por favor, inténtalo de nuevo."
+      },
+      "invalidFormat": {
+        "title": "Formato de Movimiento Inválido",
+        "description": "No se pudo entender el movimiento \"{move}\"."
+      },
+      "aiInvalidMove": "La IA ha devuelto un movimiento inválido. Podría ser un error. Intenta un movimiento diferente.",
+      "corruptedHistory": "Historial de partida corrupto. Por favor, reinicia.",
+      "invalidHistoryMove": "Movimiento inválido en el historial: {move}",
+      "historyValidationError": "Ocurrió un error al validar el historial.",
+      "invalidInput": "Entrada inválida."
+    }
+  },
+  "LearnPage": {
+    "title": "Aprende con IA",
+    "description": "Pregunta sobre aperturas de ajedrez, estrategias, partidas famosas o reglas.",
+    "generating": "Generando...",
+    "askAI": "Preguntar a la IA",
+    "formTitle": "Haz una Pregunta",
+    "formDescription": "Por ejemplo: \"¿Qué es la Defensa Siciliana?\" o \"Explica la partida de 1972 entre Fischer y Spassky.\"",
+    "formPlaceholder": "Escribe tu pregunta sobre ajedrez aquí...",
+    "errorTitle": "Error",
+    "aiExplanationTitle": "Explicación de la IA"
+  },
+  "MyGamesPage": {
+    "title": "Mis Registros de Partidas",
+    "description": "Mantén un registro personal de tus batallas de ajedrez.",
+    "saving": "Guardando...",
+    "saveLog": "Guardar Partida",
+    "errorMustBeLoggedIn": "Debes iniciar sesión.",
+    "authRequiredTitle": "Autenticación Requerida",
+    "authRequiredDescription": "Debes iniciar sesión para ver y registrar tus partidas. Se ha creado una cuenta anónima para ti. Por favor, refresca la página si sigues viendo este mensaje.",
+    "newGameTitle": "Registrar Nueva Partida",
+    "newGameDescription": "Rellena los detalles de tu última partida.",
+    "resultLabel": "Resultado de la Partida",
+    "resultPlaceholder": "Selecciona un resultado",
+    "resultWin": "Gané",
+    "resultLoss": "Perdí",
+    "resultDraw": "Empate",
+    "durationLabel": "Duración (minutos)",
+    "durationPlaceholder": "ej. 30",
+    "openingMovesLabel": "Movimientos de Apertura",
+    "openingMovesPlaceholder": "ej. 1. e4 e5 2. Cf3",
+    "notesLabel": "Notas",
+    "notesPlaceholder": "Momentos interesantes, errores o cosas para recordar...",
+    "successMessage": "¡Partida guardada con éxito!",
+    "pastGamesTitle": "Partidas Anteriores",
+    "noGamesYet": "Aún no has registrado ninguna partida.",
+    "gameOn": "Partida del {date}",
+    "minutes": "minutos",
+    "openingLabel": "Apertura",
+    "errors": {
+        "result": "Por favor, selecciona un resultado.",
+        "duration": "La duración debe ser un número positivo.",
+        "openingMoves": "Los movimientos de apertura son obligatorios."
+    }
+  },
+  "RulesPage": {
+    "title": "Reglas del Ajedrez",
+    "description": "Una guía completa de las reglas, desde el movimiento básico hasta los movimientos especiales.",
+    "objective": {
+      "title": "Objetivo",
+      "content": "El objetivo en el ajedrez es dar jaque mate al rey de tu oponente. El jaque mate ocurre cuando el rey está en una posición para ser capturado (en 'jaque') y no puede escapar de la captura."
+    },
+    "movement": {
+      "title": "Movimiento de las Piezas",
+      "content": "Cada uno de los 6 tipos de piezas se mueve de manera diferente. Las piezas no pueden moverse a través de otras piezas (aunque el caballo puede saltar sobre otras), y nunca pueden moverse a una casilla con una de sus propias piezas. Sin embargo, pueden moverse para tomar el lugar de una pieza del oponente, que es capturada. Las piezas generalmente se mueven a posiciones donde pueden capturar otras piezas, defender sus propias piezas o controlar casillas importantes."
+    },
+    "king": {
+      "title": "El Rey",
+      "content": "El rey es la pieza más importante, pero es una de las más débiles. El rey solo puede moverse una casilla en cualquier dirección: arriba, abajo, a los lados y en diagonal."
+    },
+    "queen": {
+      "title": "La Dama",
+      "content": "La dama es la pieza más poderosa. Puede moverse en cualquier dirección recta (adelante, atrás, a los lados o en diagonal) tan lejos como sea posible mientras no pase a través de sus propias piezas."
+    },
+    "rook": {
+      "title": "La Torre",
+      "content": "La torre puede moverse tan lejos como quiera, pero solo hacia adelante, hacia atrás y hacia los lados. ¡Las torres son piezas particularmente poderosas cuando se protegen mutuamente y trabajan juntas!"
+    },
+    "bishop": {
+      "title": "El Alfil",
+      "content": "El alfil puede moverse tan lejos como quiera, pero solo en diagonal. Cada alfil comienza en un color (claro u oscuro) y debe permanecer siempre en ese color."
+    },
+    "knight": {
+      "title": "El Caballo",
+      "content": "Los caballos se mueven de una manera muy diferente a las otras piezas: dos casillas en una dirección y luego una más en un ángulo de 90 grados, como la forma de una 'L'. Los caballos también son las únicas piezas que pueden saltar sobre otras."
+    },
+    "pawn": {
+      "title": "El Peón",
+      "content": "Los peones son inusuales porque se mueven y capturan de diferentes maneras: se mueven hacia adelante, pero capturan en diagonal. Los peones solo pueden avanzar una casilla a la vez, excepto en su primer movimiento, donde pueden avanzar dos. Los peones solo pueden capturar una casilla en diagonal frente a ellos."
+    },
+    "castling": {
+      "title": "Enroque",
+      "content": "El enroque es una regla especial que te permite hacer dos cosas importantes en un solo movimiento: poner a tu rey a salvo y sacar tu torre de la esquina para ponerla en juego. Un jugador puede mover su rey dos casillas hacia un lado y luego mover la torre de esa esquina justo al lado del rey en el lado opuesto. Sin embargo, se deben cumplir condiciones: debe ser el primer movimiento de ese rey y de esa torre, no puede haber piezas entre ellos, y el rey no puede estar en jaque ni pasar por una casilla atacada."
+    },
+    "en-passant": {
+      "title": "Captura al Paso",
+      "content": "Si un peón avanza dos casillas en su primer movimiento y se sitúa al lado de un peón oponente, este tiene la opción de capturar al primer peón como si solo hubiera avanzado una casilla. Este movimiento especial debe realizarse inmediatamente después, o se pierde la opción."
+    },
+    "pawn-promotion": {
+      "title": "Promoción del Peón",
+      "content": "Si un peón llega al otro extremo del tablero, puede convertirse en cualquier otra pieza (excepto un rey). Generalmente, un peón se promociona a una dama."
+    }
+  },
+  "OpeningsPage": {
+    "title": "Guía de Aperturas de Ajedrez",
+    "description": "Un extenso manual sobre aperturas de ajedrez comunes y efectivas.",
+    "strategyWhite": "Estrategia para las Blancas",
+    "strategyBlack": "Estrategia para las Negras"
+  },
+  "TournamentsPage": {
+    "title": "Próximos Torneos",
+    "description": "Mantente actualizado con los eventos más importantes del mundo del ajedrez profesional.",
+    "visitWebsite": "Visitar Sitio Web"
+  },
+  "PlayersPage": {
+    "title": "Jugadores Legendarios",
+    "description": "Descubre a los íconos que han dado forma al juego del ajedrez.",
+    "chesscomProfile": "Perfil en Chess.com",
+    "lichessProfile": "Perfil en Lichess.org"
+  },
+  "ChampionshipsPage": {
+    "title": "Campeonatos Mundiales de Ajedrez",
+    "description": "Un repaso a los enfrentamientos por el título más memorables de la historia del ajedrez.",
+    "matchTitle": "Campeonato Mundial de Ajedrez {year}",
+    "winner": "Ganador",
+    "loser": "Perdedor"
+  },
+  "actions": {
+    "apiKeyError": "Falta la clave de API o no es válida. Por favor, establece tu GOOGLE_API_KEY en el archivo .env.",
+    "aiResponseError": "No se pudo obtener una respuesta de la IA. Por favor, inténtalo de nuevo."
+  }
+}
