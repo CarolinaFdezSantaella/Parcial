@@ -1,8 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { players } from "@/lib/data";
+import placeholderImages from "@/lib/placeholder-images.json";
 import { User } from "lucide-react";
 
 export default function PlayersPage() {
@@ -16,7 +18,9 @@ export default function PlayersPage() {
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {players.map((player) => (
+        {players.map((player) => {
+          const profileImage = placeholderImages.placeholderImages.find(p => p.id === player.profileImageId);
+          return (
             <Card key={player.id} className="flex flex-col text-center">
               <CardHeader className="items-center">
                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-primary/20 bg-muted flex items-center justify-center">
@@ -48,7 +52,8 @@ export default function PlayersPage() {
                 )}
               </CardFooter>
             </Card>
-        ))}
+          )
+        })}
       </div>
     </div>
   );

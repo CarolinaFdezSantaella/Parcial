@@ -5,12 +5,21 @@ import { getAiMove } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { User, Bot } from 'lucide-react';
-import { Chess } from 'chess.js';
+import { Chess, Piece } from 'chess.js';
 import { King, Queen, Rook, Bishop, Knight, Pawn } from '@/components/icons/chess-icons';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const PIECE_COMPONENTS: { [key: string]: React.FC<{ className: string }> } = {
   k: King,
@@ -21,7 +30,7 @@ const PIECE_COMPONENTS: { [key: string]: React.FC<{ className: string }> } = {
   p: Pawn,
 };
 
-const Chessboard = ({ board }: { board: ({ square: string; type: string; color: string } | null)[][] }) => {
+const Chessboard = ({ board }: { board: (Piece | null)[][] }) => {
     const renderBoard = [];
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
@@ -65,8 +74,37 @@ export default function PlayPage() {
     const moveInputRef = useRef<HTMLInputElement>(null);
 
     const [game, setGame] = useState(() => new Chess());
-    const [board, setBoard] = useState(game.board());
     const [moveHistory, setMoveHistory] = useState<Move[]>([]);
+    const [gameOver, setGameOver] = useState<{isGameOver: boolean; message: string}>({isGameOver: false, message: ''});
+    
+    const board = useMemo(() => game.board(), [game]);
+
+    const handleRestart = () => {
+        const newGame = new Chess();
+        setGame(newGame);
+        setMoveHistory([]);
+        setGameOver({isGameOver: false, message: ''});
+        formRef.current?.reset();
+    }
+
+    useEffect(() => {
+        if (game.isGameOver()) {
+            let message = "Game Over";
+            if (game.isCheckmate()) {
+                message = `Checkmate! ${game.turn() === 'w' ? 'Black' : 'White'} wins.`;
+            } else if (game.isDraw()) {
+                message = "It's a draw!";
+            } else if (game.isStalemate()) {
+                message = "Stalemate!";
+            } else if (game.isThreefoldRepetition()) {
+                message = "Draw by threefold repetition.";
+            } else if (game.isInsufficientMaterial()) {
+                message = "Draw by insufficient material.";
+            }
+            setGameOver({isGameOver: true, message: message + " Starting a new game."});
+        }
+    }, [game]);
+
 
     useEffect(() => {
         if (state?.error) {
@@ -77,62 +115,68 @@ export default function PlayPage() {
             });
         }
         if (state?.aiMove) {
-            const lastUserMove = moveInputRef.current?.value;
+            const lastUserMove = formRef.current?.querySelector<HTMLInputElement>('input[name="userMove"]')?.value;
             if (lastUserMove) {
-                const newGame = new Chess(game.fen());
-                if (newGame.move(lastUserMove, { sloppy: true })) {
-                    if(newGame.move(state.aiMove as string, { sloppy: true })) {
-                       setGame(newGame);
-                       setBoard(newGame.board());
-                       setMoveHistory(prev => [...prev, { user: lastUserMove, ai: state.aiMove as string }]);
-                    } else {
-                        // AI move is invalid, this shouldn't happen with a proper AI
-                         toast({ variant: 'destructive', title: 'Invalid AI Move', description: state.aiMove as string });
-                    }
+                const gameCopy = new Chess(game.fen());
+                
+                // We already validated the user move in handleFormAction, so apply it.
+                gameCopy.move(lastUserMove);
+                
+                // Now apply the AI move
+                const aiMoveResult = gameCopy.move(state.aiMove);
+                
+                if (aiMoveResult) {
+                    setGame(gameCopy);
+                    setMoveHistory(prev => [...prev, { user: lastUserMove, ai: state.aiMove as string }]);
                 } else {
-                     // This case should be handled by form validation/server action, but as a fallback
-                     toast({ variant: 'destructive', title: 'Invalid Move', description: 'Your move was invalid.' });
+                    // This is a safeguard, the AI should not return invalid moves
+                    toast({
+                        variant: 'destructive',
+                        title: 'Invalid AI Move',
+                        description: `The AI returned an invalid move: ${state.aiMove}. The game state has been rolled back. Please try your move again.`
+                    });
                 }
             }
             formRef.current?.reset();
+            moveInputRef.current?.focus();
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
     const handleFormAction = (formData: FormData) => {
-        const currentMove = formData.get('move') as string;
-        if (!currentMove) return;
+        const userMove = formData.get('move') as string;
+        if (!userMove) return;
 
-        const tempGame = new Chess(game.fen());
-        // Check if the move is valid before dispatching
-        if (!tempGame.move(currentMove, { sloppy: true })) {
-             toast({
+        const gameCopy = new Chess(game.fen());
+        try {
+            const moveResult = gameCopy.move(userMove, { sloppy: true });
+             if (moveResult === null) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Move',
+                    description: `The move "${userMove}" is not valid. Please try again.`,
+                });
+                return;
+            }
+        } catch (e: any) {
+            toast({
                 variant: 'destructive',
-                title: 'Invalid Move',
-                description: `The move "${currentMove}" is not a valid move.`,
+                title: 'Invalid Move Format',
+                description: e.message || `The move "${userMove}" could not be understood.`,
             });
             return;
         }
 
-        // We only send the SAN history, not the whole FEN
-        const sanHistory = game.history();
-        formData.set('history', JSON.stringify(sanHistory));
-        formData.set('userMove', currentMove); // Also send the current move separately
+        const history = game.history({ verbose: false });
+        formData.set('history', JSON.stringify(history));
+        formData.set('userMove', userMove);
 
         dispatch(formData);
     }
     
-    const handleRestart = () => {
-        const newGame = new Chess();
-        setGame(newGame);
-        setBoard(newGame.board());
-        setMoveHistory([]);
-        formRef.current?.reset();
-        // Reset server action state if possible, or just clear local state
-    }
-
 
     return (
+        <>
         <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
             <div className="flex-grow lg:w-2/3">
                 <header className="mb-8">
@@ -180,6 +224,8 @@ export default function PlayPage() {
                     </CardContent>
                     <CardFooter className="flex-col items-stretch gap-4">
                         <form action={handleFormAction} ref={formRef} className="w-full space-y-4">
+                             <input type="hidden" name="userMove" value={moveInputRef.current?.value || ''} />
+                             <input type="hidden" name="history" value={JSON.stringify(game.history())} />
                             <div className="flex flex-col sm:flex-row gap-2">
                                 <Input name="move" placeholder="e.g., e4" required className="flex-grow" ref={moveInputRef}/>
                                 <SubmitButton />
@@ -191,5 +237,19 @@ export default function PlayPage() {
                 </Card>
             </div>
         </div>
+        <AlertDialog open={gameOver.isGameOver} onOpenChange={(open) => !open && handleRestart()}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                <AlertDialogTitle>Game Over</AlertDialogTitle>
+                <AlertDialogDescription>
+                    {gameOver.message}
+                </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                <AlertDialogAction onClick={handleRestart}>Play Again</AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
+      </>
     );
 }

@@ -25,19 +25,22 @@ export async function getAiMove(prevState: any, formData: FormData) {
   }
   
   const { userMove, history: historyJson } = validatedFields.data;
-  const history = JSON.parse(historyJson);
+  let history: string[];
+  try {
+    history = JSON.parse(historyJson);
+  } catch (e) {
+    return { aiMove: null, error: 'Corrupted game history. Please restart.' };
+  }
 
-  // Validate the user's move against the game state from history
   const game = new Chess();
   try {
     history.forEach((move: string) => game.move(move));
     const moveResult = game.move(userMove, { sloppy: true });
     if (moveResult === null) {
-      return { aiMove: null, error: `Invalid move: ${userMove}. Please try another move.` };
+      return { aiMove: null, error: `Invalid move: "${userMove}". The move is not legal in the current position.` };
     }
-  } catch (e) {
-    // This catches errors from chess.js if history is fundamentally broken
-    return { aiMove: null, error: 'The game history seems to be corrupted. Please restart the game.' };
+  } catch (e: any) {
+    return { aiMove: null, error: e.message || 'The game history seems to be corrupted. Please restart the game.' };
   }
 
 
@@ -48,8 +51,9 @@ export async function getAiMove(prevState: any, formData: FormData) {
         history: fullHistory 
     });
     
-    if (!response.aiMove || response.aiMove.includes("Invalid")) {
-      return { aiMove: null, error: 'The AI returned an invalid move. Please try a different move.' };
+    const aiGame = new Chess(game.fen());
+    if (!response.aiMove || aiGame.move(response.aiMove, { sloppy: true }) === null) {
+      return { aiMove: null, error: 'The AI returned an invalid move. This might be a bug. Please try a different move.' };
     }
     return { aiMove: response.aiMove, error: null };
   } catch (error) {
