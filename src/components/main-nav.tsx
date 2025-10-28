@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
-import { Home, BookOpen, Calendar, Users, Trophy, Bot, GraduationCap } from 'lucide-react';
+import { Home, BookOpen, Calendar, Users, Trophy, Bot, BookCopy } from 'lucide-react';
 import { useSidebar } from './ui/sidebar';
 
 const navItems = [
@@ -16,6 +16,11 @@ const navItems = [
     href: '/rules',
     label: 'Rules',
     icon: <BookOpen />,
+  },
+  {
+    href: '/openings',
+    label: 'Openings',
+    icon: <BookCopy />,
   },
   {
     href: '/tournaments',
@@ -37,11 +42,6 @@ const navItems = [
     label: 'Play AI',
     icon: <Bot />,
   },
-  {
-    href: '/learn',
-    label: 'Learn with AI',
-    icon: <GraduationCap />,
-  },
 ];
 
 export function MainNav() {
@@ -52,17 +52,19 @@ export function MainNav() {
     <SidebarMenu>
       {navItems.map((item) => (
         <SidebarMenuItem key={item.href}>
+          <Link href={item.href}>
             <SidebarMenuButton
               asChild
               isActive={pathname === item.href}
               tooltip={item.label}
               onClick={() => setOpenMobile(false)}
             >
-              <Link href={item.href}>
+              <div>
                 {item.icon}
                 <span>{item.label}</span>
-              </Link>
+              </div>
             </SidebarMenuButton>
+          </Link>
         </SidebarMenuItem>
       ))}
     </SidebarMenu>

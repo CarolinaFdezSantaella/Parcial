@@ -4,12 +4,15 @@ import { Trophy } from "lucide-react";
 
 export default function ChampionshipsPage() {
   return (
-    <div className="max-w-4xl mx-auto">
-      <header className="mb-8">
-        <h1 className="text-4xl font-headline font-bold">World Chess Championships</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          A look back at some of the most memorable title matches in chess history.
-        </p>
+    <div className="max-w-4xl mx-auto p-4">
+      <header className="mb-8 flex items-center gap-3">
+        <Trophy className="w-8 h-8 text-primary" />
+        <div>
+          <h1 className="text-4xl font-headline font-bold">World Chess Championships</h1>
+          <p className="mt-1 text-lg text-muted-foreground">
+            A look back at the most memorable title matches in chess history.
+          </p>
+        </div>
       </header>
 
       <div className="space-y-6">

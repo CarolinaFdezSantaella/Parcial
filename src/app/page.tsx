@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { BookOpen, Bot, Calendar, Users, Trophy, GraduationCap } from 'lucide-react';
+import { BookOpen, Bot, Calendar, Users, Trophy, BookCopy } from 'lucide-react';
 import placeholderImages from '@/lib/placeholder-images.json';
 
 const features = [
@@ -17,6 +17,12 @@ const features = [
     description: 'Test your skills and practice new strategies against our AI opponent.',
     icon: <Bot className="h-8 w-8 text-primary" />,
     href: '/play'
+  },
+  {
+    title: 'Study Openings',
+    description: 'Explore a manual of common chess openings and their strategies.',
+    icon: <BookCopy className="h-8 w-8 text-primary" />,
+    href: '/openings'
   },
   {
     title: 'Explore Tournaments',
@@ -35,12 +41,6 @@ const features = [
     description: 'Dive into the rich history of the World Chess Championships.',
     icon: <Trophy className="h-8 w-8 text-primary" />,
     href: '/championships'
-  },
-  {
-    title: 'AI Explanations',
-    description: 'Get AI-powered explanations for complex chess concepts and strategies.',
-    icon: <GraduationCap className="h-8 w-8 text-primary" />,
-    href: '/learn'
   },
 ];
 

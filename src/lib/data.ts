@@ -192,3 +192,76 @@ export const championships = [
     description: 'A landmark match where a reigning world champion, Garry Kasparov, was defeated by a computer, IBM\'s Deep Blue, under standard tournament time controls. It was a major milestone in the history of artificial intelligence.',
   },
 ];
+
+export const chessOpenings = [
+    {
+      id: "ruy-lopez",
+      name: "Ruy López (Spanish Game)",
+      moves: "1. e4 e5 2. Nf3 Nc6 3. Bb5",
+      description: "One of the oldest and most popular openings. White develops a piece, attacks the knight that defends the e5-pawn, and prepares to castle. It leads to a wide variety of strategic and tactical positions.",
+      strategy: {
+        white: "Put pressure on Black's center, control the e-file, and develop pieces to support an attack on the kingside or exploit weaknesses in Black's pawn structure.",
+        black: "Defend the e5-pawn, challenge White's control of the center, and create counterplay on the queenside or by breaking in the center."
+      }
+    },
+    {
+      id: "italian-game",
+      name: "Italian Game",
+      moves: "1. e4 e5 2. Nf3 Nc6 3. Bc4",
+      description: "A family of openings characterized by quiet, strategic play. White's bishop on c4 puts pressure on Black's weak f7-square and controls the center.",
+      strategy: {
+        white: "Control the center, complete development, and build a slow but steady attack. The Giuoco Piano ('Quiet Game') is a common variation.",
+        black: "Equalize in the center, develop pieces harmoniously, and prepare to counter White's plans. The Two Knights Defense is a more aggressive response."
+      }
+    },
+    {
+      id: "sicilian-defense",
+      name: "Sicilian Defense",
+      moves: "1. e4 c5",
+      description: "Black's most popular and best-scoring response to 1. e4. Black immediately fights for the center by challenging d4 and creating an asymmetrical pawn structure, which often leads to complex and sharp positions.",
+      strategy: {
+        white: "Try to open the center with d4 to exploit the lead in development. Often attacks on the kingside.",
+        black: "Use the c-pawn to control the d4-square, and seek counterplay on the queenside using the semi-open c-file."
+      }
+    },
+    {
+      id: "french-defense",
+      name: "French Defense",
+      moves: "1. e4 e6",
+      description: "A solid and resilient opening. Black allows White to establish a space advantage in the center with 2. d4, intending to challenge it later. Games are often closed or semi-closed in nature.",
+      strategy: {
+        white: "Maintain the space advantage in the center and try to create an attack on the kingside.",
+        black: "Undermine White's center with moves like ...c5 or ...f6, and create counterplay. Black's main challenge is often the passivity of the light-squared bishop."
+      }
+    },
+    {
+      id: "caro-kann-defense",
+      name: "Caro-Kann Defense",
+      moves: "1. e4 c6",
+      description: "Known for its extreme solidity and safety. Black prepares to challenge White's center with 2...d5 without creating the same difficulties for the light-squared bishop as in the French Defense.",
+      strategy: {
+        white: "Choose between an aggressive line (Advance Variation) or a classical setup to maintain a small but lasting space advantage.",
+        black: "Achieve a solid pawn structure, complete development, and aim for a favorable endgame."
+      }
+    },
+    {
+      id: "queens-gambit",
+      name: "Queen's Gambit",
+      moves: "1. d4 d5 2. c4",
+      description: "One of the most played and respected openings. White offers a 'gambit' of the c-pawn to deflect Black's central d-pawn. Black can accept (Queen's Gambit Accepted) or decline (Queen's Gambit Declined).",
+      strategy: {
+        white: "Use the space advantage and central control to launch an attack or squeeze Black positionally.",
+        black: "(Declined) Maintain a solid central foothold and develop pieces. (Accepted) Give back the pawn to disrupt White's coordination and complete development."
+      }
+    },
+    {
+      id: "indian-defenses",
+      name: "Indian Defenses",
+      moves: "1. d4 Nf6",
+      description: "A modern and flexible way for Black to respond to 1. d4. Instead of occupying the center with pawns, Black controls it with pieces, leading to a wide range of setups like the King's Indian, Nimzo-Indian, and Queen's Indian.",
+      strategy: {
+        white: "Build a strong pawn center and use the space advantage to develop an attack.",
+        black: "Control the center from a distance, fianchetto one or both bishops, and aim to undermine and attack White's pawn center."
+      }
+    }
+];

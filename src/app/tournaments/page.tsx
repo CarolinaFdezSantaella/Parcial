@@ -6,12 +6,15 @@ import { Calendar, MapPin } from "lucide-react";
 
 export default function TournamentsPage() {
   return (
-    <div className="max-w-7xl mx-auto">
-      <header className="mb-8">
-        <h1 className="text-4xl font-headline font-bold">Upcoming Tournaments</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          Stay updated with the major events in the professional chess world.
-        </p>
+    <div className="max-w-7xl mx-auto p-4">
+      <header className="mb-8 flex items-center gap-3">
+        <Calendar className="w-8 h-8 text-primary" />
+        <div>
+          <h1 className="text-4xl font-headline font-bold">Upcoming Tournaments</h1>
+          <p className="mt-1 text-lg text-muted-foreground">
+            Stay updated with the major events in the professional chess world.
+          </p>
+        </div>
       </header>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

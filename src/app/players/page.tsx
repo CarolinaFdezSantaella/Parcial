@@ -1,25 +1,25 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { players } from "@/lib/data";
-import placeholderImages from "@/lib/placeholder-images.json";
-import { User } from "lucide-react";
+import { User, Users as UsersIcon } from "lucide-react";
 
 export default function PlayersPage() {
   return (
-    <div className="max-w-7xl mx-auto">
-      <header className="mb-8">
-        <h1 className="text-4xl font-headline font-bold">Legendary Players</h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          Discover the icons who have shaped the game of chess.
-        </p>
+    <div className="max-w-7xl mx-auto p-4">
+      <header className="mb-8 flex items-center gap-3">
+        <UsersIcon className="w-8 h-8 text-primary" />
+        <div>
+          <h1 className="text-4xl font-headline font-bold">Legendary Players</h1>
+          <p className="mt-1 text-lg text-muted-foreground">
+            Discover the icons who have shaped the game of chess.
+          </p>
+        </div>
       </header>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {players.map((player) => {
-          const profileImage = placeholderImages.placeholderImages.find(p => p.id === player.profileImageId);
           return (
             <Card key={player.id} className="flex flex-col text-center">
               <CardHeader className="items-center">
