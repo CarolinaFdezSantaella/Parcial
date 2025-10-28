@@ -9,18 +9,38 @@ import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { User, Bot } from 'lucide-react';
+import { Chess } from 'chess.js';
+import { King, Queen, Rook, Bishop, Knight, Pawn } from '@/components/icons/chess-icons';
 
-const Chessboard = () => {
-    const board = [];
+const PIECE_COMPONENTS: { [key: string]: React.FC<{ className: string }> } = {
+  k: King,
+  q: Queen,
+  r: Rook,
+  b: Bishop,
+  n: Knight,
+  p: Pawn,
+};
+
+const Chessboard = ({ board }: { board: ({ square: string; type: string; color: string } | null)[][] }) => {
+    const renderBoard = [];
     for (let i = 0; i < 8; i++) {
         for (let j = 0; j < 8; j++) {
             const isBlack = (i + j) % 2 !== 0;
-            board.push(
-                <div key={`${i}-${j}`} className={isBlack ? 'bg-primary/50' : 'bg-primary/10'}></div>
+            const piece = board[i][j];
+            const PieceComponent = piece ? PIECE_COMPONENTS[piece.type] : null;
+
+            renderBoard.push(
+                <div key={`${i}-${j}`} className={`flex items-center justify-center ${isBlack ? 'bg-primary/50' : 'bg-primary/10'}`}>
+                    {PieceComponent && (
+                        <PieceComponent
+                            className={`w-3/4 h-3/4 ${piece?.color === 'b' ? 'text-foreground' : 'text-primary-foreground'}`}
+                        />
+                    )}
+                </div>
             );
         }
     }
-    return <div className="grid grid-cols-8 aspect-square w-full h-full">{board}</div>;
+    return <div className="grid grid-cols-8 aspect-square w-full h-full">{renderBoard}</div>;
 };
 
 function SubmitButton() {
@@ -40,11 +60,13 @@ type Move = {
 export default function PlayPage() {
     const initialState = { error: null, aiMove: null };
     const [state, dispatch] = useFormState(getAiMove, initialState);
-    const [history, setHistory] = useState<Move[]>([]);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
     const moveInputRef = useRef<HTMLInputElement>(null);
-    const historyInputRef = useRef<HTMLInputElement>(null);
+
+    const [game, setGame] = useState(() => new Chess());
+    const [board, setBoard] = useState(game.board());
+    const [moveHistory, setMoveHistory] = useState<Move[]>([]);
 
     useEffect(() => {
         if (state?.error) {
@@ -57,12 +79,19 @@ export default function PlayPage() {
         if (state?.aiMove) {
             const lastUserMove = moveInputRef.current?.value;
             if (lastUserMove) {
-                const newHistory = [...history, { user: lastUserMove, ai: state.aiMove as string }];
-                setHistory(newHistory);
-                
-                const flatHistory = newHistory.flatMap(turn => [turn.user, turn.ai]);
-                if(historyInputRef.current) {
-                    historyInputRef.current.value = JSON.stringify(flatHistory);
+                const newGame = new Chess(game.fen());
+                if (newGame.move(lastUserMove, { sloppy: true })) {
+                    if(newGame.move(state.aiMove as string, { sloppy: true })) {
+                       setGame(newGame);
+                       setBoard(newGame.board());
+                       setMoveHistory(prev => [...prev, { user: lastUserMove, ai: state.aiMove as string }]);
+                    } else {
+                        // AI move is invalid, this shouldn't happen with a proper AI
+                         toast({ variant: 'destructive', title: 'Invalid AI Move', description: state.aiMove as string });
+                    }
+                } else {
+                     // This case should be handled by form validation/server action, but as a fallback
+                     toast({ variant: 'destructive', title: 'Invalid Move', description: 'Your move was invalid.' });
                 }
             }
             formRef.current?.reset();
@@ -73,14 +102,35 @@ export default function PlayPage() {
     const handleFormAction = (formData: FormData) => {
         const currentMove = formData.get('move') as string;
         if (!currentMove) return;
-    
-        const flatHistory = history.flatMap(turn => [turn.user, turn.ai]);
-        
-        const fullHistory = [...flatHistory, currentMove];
-        formData.set('history', JSON.stringify(fullHistory));
+
+        const tempGame = new Chess(game.fen());
+        // Check if the move is valid before dispatching
+        if (!tempGame.move(currentMove, { sloppy: true })) {
+             toast({
+                variant: 'destructive',
+                title: 'Invalid Move',
+                description: `The move "${currentMove}" is not a valid move.`,
+            });
+            return;
+        }
+
+        // We only send the SAN history, not the whole FEN
+        const sanHistory = game.history();
+        formData.set('history', JSON.stringify(sanHistory));
+        formData.set('userMove', currentMove); // Also send the current move separately
 
         dispatch(formData);
     }
+    
+    const handleRestart = () => {
+        const newGame = new Chess();
+        setGame(newGame);
+        setBoard(newGame.board());
+        setMoveHistory([]);
+        formRef.current?.reset();
+        // Reset server action state if possible, or just clear local state
+    }
+
 
     return (
         <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
@@ -92,8 +142,7 @@ export default function PlayPage() {
                     </p>
                 </header>
                 <div className="relative aspect-square max-w-[600px] mx-auto rounded-lg overflow-hidden shadow-lg">
-                    <Chessboard />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent"></div>
+                    <Chessboard board={board} />
                 </div>
             </div>
 
@@ -105,11 +154,11 @@ export default function PlayPage() {
                     </CardHeader>
                     <CardContent>
                         <ScrollArea className="h-[300px] w-full border rounded-md p-4 bg-muted/30">
-                            {history.length === 0 ? (
+                            {moveHistory.length === 0 ? (
                                 <p className="text-center text-muted-foreground">No moves yet. You start with white.</p>
                             ) : (
                                 <div className="space-y-4">
-                                    {history.map((turn, index) => (
+                                    {moveHistory.map((turn, index) => (
                                         <div key={index} className="space-y-2 text-sm">
                                             <div className="flex items-start gap-2">
                                                 <User className="w-4 h-4 mt-0.5 flex-shrink-0 text-accent" />
@@ -129,15 +178,15 @@ export default function PlayPage() {
                             )}
                         </ScrollArea>
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="flex-col items-stretch gap-4">
                         <form action={handleFormAction} ref={formRef} className="w-full space-y-4">
-                            <input type="hidden" name="history" ref={historyInputRef} value="[]" />
                             <div className="flex flex-col sm:flex-row gap-2">
                                 <Input name="move" placeholder="e.g., e4" required className="flex-grow" ref={moveInputRef}/>
                                 <SubmitButton />
                             </div>
                             {state?.error && !state.aiMove && <p className="text-sm text-destructive">{state.error}</p>}
                         </form>
+                        <Button variant="outline" onClick={handleRestart}>Restart Game</Button>
                     </CardFooter>
                 </Card>
             </div>

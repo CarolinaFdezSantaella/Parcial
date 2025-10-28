@@ -3,31 +3,50 @@
 import { playAIBasicOpponent } from '@/ai/flows/play-ai-basic-opponent';
 import { generateChessExplanation } from '@/ai/flows/generate-chess-explanations';
 import { z } from 'zod';
+import { Chess } from 'chess.js';
+
 
 const playSchema = z.object({
-  move: z.string().min(2, { message: "Move must be at least 2 characters." }),
+  userMove: z.string().min(1, { message: "Move cannot be empty." }),
   history: z.string(), // JSON string of moves
 });
 
 export async function getAiMove(prevState: any, formData: FormData) {
   const validatedFields = playSchema.safeParse({
-    move: formData.get('move'),
+    userMove: formData.get('userMove'),
     history: formData.get('history'),
   });
 
   if (!validatedFields.success) {
     return {
       aiMove: null,
-      error: validatedFields.error.flatten().fieldErrors.move?.[0] || "Invalid input.",
+      error: validatedFields.error.flatten().fieldErrors.userMove?.[0] || "Invalid input.",
     };
   }
+  
+  const { userMove, history: historyJson } = validatedFields.data;
+  const history = JSON.parse(historyJson);
+
+  // Validate the user's move against the game state from history
+  const game = new Chess();
+  try {
+    history.forEach((move: string) => game.move(move));
+    const moveResult = game.move(userMove, { sloppy: true });
+    if (moveResult === null) {
+      return { aiMove: null, error: `Invalid move: ${userMove}. Please try another move.` };
+    }
+  } catch (e) {
+    // This catches errors from chess.js if history is fundamentally broken
+    return { aiMove: null, error: 'The game history seems to be corrupted. Please restart the game.' };
+  }
+
 
   try {
-    const history = JSON.parse(validatedFields.data.history);
-    // The last move is the user's move, so we extract it.
-    const userMove = history.pop();
-    
-    const response = await playAIBasicOpponent({ userMove, history });
+    const fullHistory = [...history, userMove];
+    const response = await playAIBasicOpponent({ 
+        userMove: userMove, 
+        history: fullHistory 
+    });
     
     if (!response.aiMove || response.aiMove.includes("Invalid")) {
       return { aiMove: null, error: 'The AI returned an invalid move. Please try a different move.' };

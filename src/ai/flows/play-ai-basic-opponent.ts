@@ -16,7 +16,7 @@ const PlayAIBasicOpponentInputSchema = z.object({
   userMove: z
     .string()
     .describe('The user\'s move in chess notation (e.g., e4, Nf3, Rxa7).'),
-  history: z.array(z.string()).describe('A list of moves made so far in the game, in order.'),
+  history: z.array(z.string()).describe('A list of moves made so far in the game, in order, in SAN format.'),
 });
 export type PlayAIBasicOpponentInput = z.infer<typeof PlayAIBasicOpponentInputSchema>;
 
@@ -35,18 +35,16 @@ const playAIBasicOpponentPrompt = ai.definePrompt({
   name: 'playAIBasicOpponentPrompt',
   input: {schema: PlayAIBasicOpponentInputSchema},
   output: {schema: PlayAIBasicOpponentOutputSchema},
-  prompt: `You are a basic AI chess opponent. You are playing as black.
-The user is playing as white.
-The game history (so far) is: {{#each history}}{{{this}}}{{/each}}
+  prompt: `You are a basic AI chess opponent playing as black. The user is white.
+The game history in SAN is: {{#each history}}'{{this}}' {{/each}}.
 The user has just made the move '{{{userMove}}}'.
 
-Think step-by-step:
-1.  What is the current state of the board based on the history?
-2.  What pieces can you (black) legally move?
-3.  What is a reasonable and valid response to the user's move?
-4.  The move must be in Standard Algebraic Notation (SAN).
-
-Respond with only the valid chess move you will make. Do not add any other text.`,
+Your task is to determine the next best move for black.
+1. Analyze the current board state based on the full game history.
+2. Identify all legal moves for black.
+3. Choose a reasonable and valid move in response.
+4. Your response MUST be only the single move in Standard Algebraic Notation (SAN), for example: 'e5' or 'Nf6'. Do not add any other text, explanation, or formatting.
+`,
 });
 
 const playAIBasicOpponentFlow = ai.defineFlow(
@@ -56,7 +54,14 @@ const playAIBasicOpponentFlow = ai.defineFlow(
     outputSchema: PlayAIBasicOpponentOutputSchema,
   },
   async input => {
-    const {output} = await playAIBasicOpponentPrompt(input);
+    // The history from input already includes the latest user move.
+    const fullHistory = input.history;
+    const lastMove = fullHistory[fullHistory.length - 1];
+
+    const {output} = await playAIBasicOpponentPrompt({
+        userMove: lastMove,
+        history: fullHistory
+    });
     return output!;
   }
 );
