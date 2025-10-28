@@ -4,21 +4,22 @@ import { cn } from '@/lib/utils';
 import { MainLayout } from '@/components/main-layout';
 import { Toaster } from '@/components/ui/toaster';
 import { FirebaseClientProvider } from '@/firebase';
-import { NextIntlClientProvider, useMessages } from 'next-intl';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Chess Hub',
   description: 'Your one-stop destination for everything chess.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { locale }
 }: Readonly<{
   children: React.ReactNode;
   params: { locale: string };
 }>) {
-  const messages = useMessages();
+  const messages = await getMessages();
 
   return (
     <html lang={locale} className="dark">
