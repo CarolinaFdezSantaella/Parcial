@@ -1,0 +1,73 @@
+/**
+ * @fileoverview Firestore Security Rules for Chess Hub application.
+ *
+ * Core Philosophy:
+ * This ruleset enforces a strict user-ownership model for both user profiles and chess game logs. Users can only create, read, update, and delete their own data.
+ *
+ * Data Structure:
+ * - User profiles are stored in `/users/{userId}`.
+ * - Chess game logs are stored in `/users/{userId}/game_logs/{gameLogId}`.
+ *
+ * Key Security Decisions:
+ * - Users can only manage their own profiles and game logs.
+ * - Listing game logs is restricted to the owner of the user profile.
+ * - No global admin roles are defined.
+ *
+ * Denormalization for Authorization:
+ * - Each ChessGameLog document contains a `userId` field, allowing rules to quickly verify ownership without additional reads.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    /**
+     * @description Allows a user to manage their own profile.
+     * @path /users/{userId}
+     * @allow (create) - User 'abc' can create their profile if request.auth.uid == 'abc'.
+     * @allow (get) - User 'abc' can get their profile if request.auth.uid == 'abc'.
+     * @allow (update) - User 'abc' can update their profile if request.auth.uid == 'abc'.
+     * @allow (delete) - User 'abc' can delete their profile if request.auth.uid == 'abc'.
+     * @deny (create) - User 'def' cannot create a profile for user 'abc'.
+     * @deny (get) - User 'def' cannot get the profile for user 'abc'.
+     * @deny (update) - User 'def' cannot update the profile for user 'abc'.
+     * @deny (delete) - User 'def' cannot delete the profile for user 'abc'.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      allow get: if isOwner(userId);
+      allow list: if false;
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isOwner(userId) && resource.data.id == userId;
+      allow delete: if isOwner(userId) && resource != null;
+    }
+
+    /**
+     * @description Allows a user to manage their own game logs.
+     * @path /users/{userId}/game_logs/{gameLogId}
+     * @allow (create) - User 'abc' can create a game log under /users/abc/game_logs/xyz if request.auth.uid == 'abc'.
+     * @allow (get) - User 'abc' can get the game log /users/abc/game_logs/xyz if request.auth.uid == 'abc'.
+     * @allow (list) - User 'abc' can list game logs under /users/abc if request.auth.uid == 'abc'.
+     * @allow (update) - User 'abc' can update the game log /users/abc/game_logs/xyz if request.auth.uid == 'abc'.
+     * @allow (delete) - User 'abc' can delete the game log /users/abc/game_logs/xyz if request.auth.uid == 'abc'.
+     * @deny (create) - User 'def' cannot create a game log under /users/abc/game_logs/xyz.
+     * @deny (get) - User 'def' cannot get the game log /users/abc/game_logs/xyz.
+     * @deny (list) - User 'def' cannot list game logs under /users/abc.
+     * @deny (update) - User 'def' cannot update the game log /users/abc/game_logs/xyz.
+     * @deny (delete) - User 'def' cannot delete the game log /users/abc/game_logs/xyz.
+     * @principle Enforces document ownership for all operations.
+     */
+    match /users/{userId}/game_logs/{gameLogId} {
+      function isOwner(userId) {
+        return request.auth != null && request.auth.uid == userId;
+      }
+      allow get: if isOwner(userId);
+      allow list: if isOwner(userId);
+      allow create: if isOwner(userId) && request.resource.data.userId == userId && request.resource.data.id == gameLogId;
+      allow update: if isOwner(userId) && resource.data.userId == userId && resource != null;
+      allow delete: if isOwner(userId) && resource != null;
+    }
+  }
+}

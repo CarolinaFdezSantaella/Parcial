@@ -1,0 +1,122 @@
+{
+  "entities": {
+    "ChessGameLog": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ChessGameLog",
+      "type": "object",
+      "description": "Represents a user's logged chess game data.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the chess game log entry."
+        },
+        "userId": {
+          "type": "string",
+          "description": "Reference to the User who played the game. (Relationship: User 1:N ChessGameLog)"
+        },
+        "date": {
+          "type": "string",
+          "description": "Date when the chess game was played.",
+          "format": "date-time"
+        },
+        "result": {
+          "type": "string",
+          "description": "Result of the game (e.g., win, loss, draw)."
+        },
+        "duration": {
+          "type": "number",
+          "description": "Duration of the game in minutes."
+        },
+        "openingMoves": {
+          "type": "string",
+          "description": "Description of the opening moves used in the game."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional notes about the game."
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "date",
+        "result",
+        "duration",
+        "openingMoves"
+      ]
+    },
+    "User": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "User",
+      "type": "object",
+      "description": "Represents a user of the Chess Hub application.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the user."
+        },
+        "username": {
+          "type": "string",
+          "description": "The username of the user."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the user.",
+          "format": "email"
+        }
+      },
+      "required": [
+        "id",
+        "username",
+        "email"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "anonymous"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}/game_logs/{gameLogId}",
+        "definition": {
+          "entityName": "ChessGameLog",
+          "schema": {
+            "$ref": "#/backend/entities/ChessGameLog"
+          },
+          "description": "Stores chess game logs for each user. The 'userId' path parameter ensures that each user's game logs are stored separately, enforcing ownership and simplifying security rules.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            },
+            {
+              "name": "gameLogId",
+              "description": "The unique identifier of the chess game log entry."
+            }
+          ]
+        }
+      },
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "User",
+          "schema": {
+            "$ref": "#/backend/entities/User"
+          },
+          "description": "Stores user profiles. Serves as the root for user-owned data like game logs.",
+          "params": [
+            {
+              "name": "userId",
+              "description": "The unique identifier of the user."
+            }
+          ]
+        }
+      }
+    ],
+    "reasoning": "The Firestore structure is designed to ensure authorization independence, clarity, and scalability, aligning with the core design principles. A hierarchical path-based ownership model is employed for user-specific data (ChessGameLogs), which simplifies security rules and ensures efficient data retrieval. By storing ChessGameLogs under the `/users/{userId}/game_logs/{gameLogId}` path, access control is naturally enforced based on the user's ID. This design eliminates the need for complex authorization checks or `get()` calls in security rules, ensuring that read and write operations are atomic and independent. This path structure ensures that only the user who owns the data can access it, providing a secure and intuitive way to manage user-specific information.\n\nThis structure supports the QAPs because listing game logs is scoped to the user. Rules can simply check that `request.auth.uid == userId` to ensure that the user is authorized to list the logs. The use of path-based ownership and structural segregation of game logs under the user's ID makes it easy to apply security rules that only allow authorized users to access their own data."
+  }
+}
