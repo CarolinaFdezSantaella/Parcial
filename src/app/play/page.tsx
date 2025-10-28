@@ -44,6 +44,7 @@ export default function PlayPage() {
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
     const moveInputRef = useRef<HTMLInputElement>(null);
+    const historyInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (state?.error) {
@@ -58,17 +59,26 @@ export default function PlayPage() {
             if (lastUserMove) {
                 const newHistory = [...history, { user: lastUserMove, ai: state.aiMove as string }];
                 setHistory(newHistory);
+                
+                const flatHistory = newHistory.flatMap(turn => [turn.user, turn.ai]);
+                if(historyInputRef.current) {
+                    historyInputRef.current.value = JSON.stringify(flatHistory);
+                }
             }
             formRef.current?.reset();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
     const handleFormAction = (formData: FormData) => {
+        const currentMove = formData.get('move') as string;
+        if (!currentMove) return;
+    
         const flatHistory = history.flatMap(turn => [turn.user, turn.ai]);
-        formData.set('history', JSON.stringify(flatHistory));
-        if (moveInputRef.current) {
-            formData.set('move', moveInputRef.current.value);
-        }
+        
+        const fullHistory = [...flatHistory, currentMove];
+        formData.set('history', JSON.stringify(fullHistory));
+
         dispatch(formData);
     }
 
@@ -121,12 +131,12 @@ export default function PlayPage() {
                     </CardContent>
                     <CardFooter>
                         <form action={handleFormAction} ref={formRef} className="w-full space-y-4">
-                            <input type="hidden" name="history" value="[]" />
+                            <input type="hidden" name="history" ref={historyInputRef} value="[]" />
                             <div className="flex flex-col sm:flex-row gap-2">
                                 <Input name="move" placeholder="e.g., e4" required className="flex-grow" ref={moveInputRef}/>
                                 <SubmitButton />
                             </div>
-                            {state?.error && <p className="text-sm text-destructive">{state.error}</p>}
+                            {state?.error && !state.aiMove && <p className="text-sm text-destructive">{state.error}</p>}
                         </form>
                     </CardFooter>
                 </Card>

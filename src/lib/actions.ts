@@ -24,7 +24,11 @@ export async function getAiMove(prevState: any, formData: FormData) {
 
   try {
     const history = JSON.parse(validatedFields.data.history);
-    const response = await playAIBasicOpponent({ userMove: validatedFields.data.move, history });
+    // The last move is the user's move, so we extract it.
+    const userMove = history.pop();
+    
+    const response = await playAIBasicOpponent({ userMove, history });
+    
     if (!response.aiMove || response.aiMove.includes("Invalid")) {
       return { aiMove: null, error: 'The AI returned an invalid move. Please try a different move.' };
     }
