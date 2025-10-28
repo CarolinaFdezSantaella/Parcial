@@ -32,14 +32,14 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased',
         )}
       >
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <FirebaseClientProvider>
+        <FirebaseClientProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
             <MainLayout>
               {children}
             </MainLayout>
-            <Toaster />
-          </FirebaseClientProvider>
-        </NextIntlClientProvider>
+          </NextIntlClientProvider>
+          <Toaster />
+        </FirebaseClientProvider>
       </body>
     </html>
   );
