@@ -54,14 +54,7 @@ const playAIBasicOpponentFlow = ai.defineFlow(
     outputSchema: PlayAIBasicOpponentOutputSchema,
   },
   async input => {
-    // The history from input already includes the latest user move.
-    const fullHistory = input.history;
-    const lastMove = fullHistory[fullHistory.length - 1];
-
-    const {output} = await playAIBasicOpponentPrompt({
-        userMove: lastMove,
-        history: fullHistory
-    });
+    const {output} = await playAIBasicOpponentPrompt(input);
     return output!;
   }
 );

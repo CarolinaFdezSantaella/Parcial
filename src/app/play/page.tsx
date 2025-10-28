@@ -168,7 +168,7 @@ export default function PlayPage() {
         }
 
         const history = game.history({ verbose: false });
-        formData.set('history', JSON.stringify(history));
+        formData.set('history', JSON.stringify([...history, userMove]));
         formData.set('userMove', userMove);
 
         dispatch(formData);

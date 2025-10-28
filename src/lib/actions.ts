@@ -27,37 +27,43 @@ export async function getAiMove(prevState: any, formData: FormData) {
   const { userMove, history: historyJson } = validatedFields.data;
   let history: string[];
   try {
+    // historyJson now includes the latest userMove, so we parse it directly
     history = JSON.parse(historyJson);
   } catch (e) {
     return { aiMove: null, error: 'Corrupted game history. Please restart.' };
   }
 
+  // Validate the entire game from the start to ensure the final move is valid in context
   const game = new Chess();
   try {
-    history.forEach((move: string) => game.move(move));
-    const moveResult = game.move(userMove, { sloppy: true });
-    if (moveResult === null) {
-      return { aiMove: null, error: `Invalid move: "${userMove}". The move is not legal in the current position.` };
-    }
+    history.forEach((move: string) => {
+        const moveResult = game.move(move);
+        if (moveResult === null) {
+            throw new Error(`Invalid move in history: ${move}`);
+        }
+    });
   } catch (e: any) {
-    return { aiMove: null, error: e.message || 'The game history seems to be corrupted. Please restart the game.' };
+    // This catches an invalid move from the history provided by the client
+    return { aiMove: null, error: `Invalid move detected in game history: ${e.message}. Please restart.` };
   }
 
 
   try {
-    const fullHistory = [...history, userMove];
     const response = await playAIBasicOpponent({ 
         userMove: userMove, 
-        history: fullHistory 
+        history: history // The history already includes the user's move
     });
     
+    // Validate AI's move before sending it back
     const aiGame = new Chess(game.fen());
-    if (!response.aiMove || aiGame.move(response.aiMove, { sloppy: true }) === null) {
-      return { aiMove: null, error: 'The AI returned an invalid move. This might be a bug. Please try a different move.' };
+    if (!response.aiMove || aiGame.move(response.aiMove) === null) {
+        console.error("AI returned invalid move:", response.aiMove, "for FEN:", game.fen());
+        return { aiMove: null, error: 'The AI returned an invalid move. This might be a bug. Please try a different move.' };
     }
+    
     return { aiMove: response.aiMove, error: null };
   } catch (error) {
-    console.error(error);
+    console.error("Error getting AI move:", error);
     return { aiMove: null, error: 'Failed to get a response from the AI. The move might be invalid or the game has ended. Please try again.' };
   }
 }
