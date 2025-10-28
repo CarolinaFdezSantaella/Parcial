@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getAiMove } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -68,7 +69,7 @@ type Move = {
 
 export default function PlayPage() {
     const initialState = { error: null, aiMove: null };
-    const [state, dispatch] = useFormState(getAiMove, initialState);
+    const [state, dispatch] = useActionState(getAiMove, initialState);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
     const moveInputRef = useRef<HTMLInputElement>(null);

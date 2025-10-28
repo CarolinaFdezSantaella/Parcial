@@ -1,6 +1,7 @@
 'use client';
 
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { getAiExplanation } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -20,7 +21,7 @@ function SubmitButton() {
 
 export default function LearnPage() {
     const initialState = { error: null, explanation: null };
-    const [state, dispatch] = useFormState(getAiExplanation, initialState);
+    const [state, dispatch] = useActionState(getAiExplanation, initialState);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
     const [showExplanation, setShowExplanation] = useState(false);
