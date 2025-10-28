@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui/sidebar';
-import { Home, BookOpen, Calendar, Users, Trophy, Bot, BookCopy, BrainCircuit } from 'lucide-react';
+import { Home, BookOpen, Calendar, Users, Trophy, Bot, BookCopy, BrainCircuit, NotebookText } from 'lucide-react';
 import { useSidebar } from './ui/sidebar';
 
 const navItems = [
@@ -47,6 +47,11 @@ const navItems = [
     label: 'Learn',
     icon: <BrainCircuit />,
   },
+  {
+    href: '/my-games',
+    label: 'My Games',
+    icon: <NotebookText />,
+  }
 ];
 
 export function MainNav() {

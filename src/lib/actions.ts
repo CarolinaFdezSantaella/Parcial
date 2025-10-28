@@ -102,3 +102,32 @@ export async function getAiExplanation(prevState: any, formData: FormData) {
     return { explanation: null, error: error.message || 'Failed to get a response from the AI. Please try again.' };
   }
 }
+
+const gameLogSchema = z.object({
+  result: z.enum(['win', 'loss', 'draw']),
+  duration: z.coerce.number().positive('Duration must be a positive number.'),
+  openingMoves: z.string().min(1, 'Opening moves are required.'),
+  notes: z.string().optional(),
+});
+
+export async function saveGameLog(prevState: any, formData: FormData) {
+  const validatedFields = gameLogSchema.safeParse({
+    result: formData.get('result'),
+    duration: formData.get('duration'),
+    openingMoves: formData.get('openingMoves'),
+    notes: formData.get('notes'),
+  });
+
+  if (!validatedFields.success) {
+    return { 
+      success: false,
+      error: validatedFields.error.flatten().fieldErrors,
+    };
+  }
+  
+  // This is where you would save the data to Firestore.
+  // We will add this logic in the next step.
+  console.log('Validated data:', validatedFields.data);
+
+  return { success: true, error: null };
+}

@@ -3,6 +3,7 @@ import './globals.css';
 import { cn } from '@/lib/utils';
 import { MainLayout } from '@/components/main-layout';
 import { Toaster } from '@/components/ui/toaster';
+import { FirebaseClientProvider } from '@/firebase';
 
 export const metadata: Metadata = {
   title: 'Chess Hub',
@@ -26,10 +27,12 @@ export default function RootLayout({
           'min-h-screen bg-background font-body antialiased',
         )}
       >
-        <MainLayout>
-          {children}
-        </MainLayout>
-        <Toaster />
+        <FirebaseClientProvider>
+          <MainLayout>
+            {children}
+          </MainLayout>
+          <Toaster />
+        </FirebaseClientProvider>
       </body>
     </html>
   );

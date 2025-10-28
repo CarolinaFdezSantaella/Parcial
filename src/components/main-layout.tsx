@@ -4,6 +4,8 @@ import { MainNav } from "@/components/main-nav";
 import { Logo } from "@/components/icons/logo";
 import { Button } from './ui/button';
 import Link from 'next/link';
+import { AuthStatus } from './auth-status';
+import { SidebarSeparator } from './ui/sidebar';
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -27,6 +29,10 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         <SidebarContent>
           <MainNav />
         </SidebarContent>
+        <SidebarFooter className='group-data-[collapsible=icon]:hidden'>
+            <SidebarSeparator />
+            <AuthStatus />
+        </SidebarFooter>
       </Sidebar>
       <SidebarInset>
         <div className="min-h-[calc(100vh-3.5rem)] md:min-h-screen">
