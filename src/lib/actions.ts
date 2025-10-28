@@ -17,6 +17,7 @@ export async function getAiMove(prevState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      aiMove: null,
       error: validatedFields.error.flatten().fieldErrors.move?.[0] || "Invalid input.",
     };
   }
@@ -25,12 +26,12 @@ export async function getAiMove(prevState: any, formData: FormData) {
     const history = JSON.parse(validatedFields.data.history);
     const response = await playAIBasicOpponent({ userMove: validatedFields.data.move, history });
     if (!response.aiMove || response.aiMove.includes("Invalid")) {
-      return { error: 'The AI returned an invalid move. Please try a different move.' };
+      return { aiMove: null, error: 'The AI returned an invalid move. Please try a different move.' };
     }
-    return { aiMove: response.aiMove };
+    return { aiMove: response.aiMove, error: null };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to get a response from the AI. The move might be invalid or the game has ended. Please try again.' };
+    return { aiMove: null, error: 'Failed to get a response from the AI. The move might be invalid or the game has ended. Please try again.' };
   }
 }
 
@@ -45,15 +46,16 @@ export async function getAiExplanation(prevState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
+      explanation: null,
       error: validatedFields.error.flatten().fieldErrors.topic?.[0] || "Invalid input.",
     };
   }
   
   try {
     const response = await generateChessExplanation({ topic: validatedFields.data.topic });
-    return { explanation: response.explanation };
+    return { explanation: response.explanation, error: null };
   } catch (error) {
     console.error(error);
-    return { error: 'Failed to generate an explanation. Please try again.' };
+    return { explanation: null, error: 'Failed to generate an explanation. Please try again.' };
   }
 }

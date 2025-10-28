@@ -34,8 +34,8 @@ Chess Hub es una aplicación web moderna diseñada para aficionados al ajedrez. 
 ## 🔗 APIs y Servicios
 
 *   **API Propia (Backend Lógico):** Se utilizan Server Actions de Next.js que se comunican con flujos de Genkit para la lógica de IA. Esto cumple la función de una API propia, procesando las solicitudes del cliente en el servidor.
-    *   `playAIBasicOpponent`: Recibe el movimiento de un usuario y devuelve el movimiento de la IA.
-    *   `generateChessExplanation`: Recibe un tema de ajedrez y genera una explicación detallada.
+    *   `getAiMove`: Recibe el movimiento de un usuario y el historial del juego, y devuelve el movimiento de la IA.
+    *   `getAiExplanation`: Recibe un tema de ajedrez y genera una explicación detallada.
 *   **API Externa:** Aunque no se consume una API REST externa de terceros para datos de ajedrez (debido a la falta de APIs gratuitas y estables para este fin), el proyecto demuestra la capacidad de interactuar con servicios externos a través de los flujos de Genkit, que se conectan a los modelos de Google.
 
 ## 🛡️ Seguridad

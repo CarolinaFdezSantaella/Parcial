@@ -38,12 +38,12 @@ type Move = {
 };
 
 export default function PlayPage() {
-    const initialState = {};
+    const initialState = { error: null, aiMove: null };
     const [state, dispatch] = useFormState(getAiMove, initialState);
     const [history, setHistory] = useState<Move[]>([]);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
-    const hiddenHistoryRef = useRef<HTMLInputElement>(null);
+    const moveInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         if (state?.error) {
@@ -54,18 +54,23 @@ export default function PlayPage() {
             });
         }
         if (state?.aiMove) {
-            const lastUserMove = formRef.current?.move.value;
+            const lastUserMove = moveInputRef.current?.value;
             if (lastUserMove) {
                 const newHistory = [...history, { user: lastUserMove, ai: state.aiMove as string }];
                 setHistory(newHistory);
-                if (hiddenHistoryRef.current) {
-                    const flatHistory = newHistory.flatMap(turn => [turn.user, turn.ai]);
-                    hiddenHistoryRef.current.value = JSON.stringify(flatHistory);
-                }
             }
             formRef.current?.reset();
         }
-    }, [state, toast, history]);
+    }, [state]);
+
+    const handleFormAction = (formData: FormData) => {
+        const flatHistory = history.flatMap(turn => [turn.user, turn.ai]);
+        formData.set('history', JSON.stringify(flatHistory));
+        if (moveInputRef.current) {
+            formData.set('move', moveInputRef.current.value);
+        }
+        dispatch(formData);
+    }
 
     return (
         <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
@@ -115,10 +120,10 @@ export default function PlayPage() {
                         </ScrollArea>
                     </CardContent>
                     <CardFooter>
-                        <form action={dispatch} ref={formRef} className="w-full space-y-4">
-                            <input type="hidden" name="history" ref={hiddenHistoryRef} value="[]" />
+                        <form action={handleFormAction} ref={formRef} className="w-full space-y-4">
+                            <input type="hidden" name="history" value="[]" />
                             <div className="flex flex-col sm:flex-row gap-2">
-                                <Input name="move" placeholder="e.g., e4" required className="flex-grow"/>
+                                <Input name="move" placeholder="e.g., e4" required className="flex-grow" ref={moveInputRef}/>
                                 <SubmitButton />
                             </div>
                             {state?.error && <p className="text-sm text-destructive">{state.error}</p>}

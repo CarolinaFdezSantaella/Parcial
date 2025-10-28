@@ -5,7 +5,7 @@ import { getAiExplanation } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { Lightbulb } from 'lucide-react';
 
@@ -19,10 +19,11 @@ function SubmitButton() {
 }
 
 export default function LearnPage() {
-    const initialState = {};
+    const initialState = { error: null, explanation: null };
     const [state, dispatch] = useFormState(getAiExplanation, initialState);
     const { toast } = useToast();
     const formRef = useRef<HTMLFormElement>(null);
+    const [showExplanation, setShowExplanation] = useState(false);
 
     useEffect(() => {
         if (state?.error) {
@@ -31,11 +32,18 @@ export default function LearnPage() {
                 title: 'Error',
                 description: state.error,
             });
+            setShowExplanation(false);
         }
         if (state?.explanation) {
             formRef.current?.reset();
+            setShowExplanation(true);
         }
     }, [state, toast]);
+
+    const handleFormAction = (formData: FormData) => {
+        setShowExplanation(false);
+        dispatch(formData);
+    }
 
     return (
         <div className="max-w-3xl mx-auto">
@@ -52,7 +60,7 @@ export default function LearnPage() {
                     <CardDescription>Enter a topic you want to learn about.</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form action={dispatch} ref={formRef} className="space-y-4">
+                    <form action={handleFormAction} ref={formRef} className="space-y-4">
                         <Textarea
                             name="topic"
                             placeholder="e.g., What is the Sicilian Defense? or Tell me about the 1972 Fischer-Spassky match."
@@ -60,12 +68,12 @@ export default function LearnPage() {
                             rows={3}
                         />
                         <SubmitButton />
-                        {state?.error && <p className="text-sm text-destructive text-center pt-2">{state.error}</p>}
+                        {state?.error && !state.explanation && <p className="text-sm text-destructive text-center pt-2">{state.error}</p>}
                     </form>
                 </CardContent>
             </Card>
 
-            {state?.explanation && (
+            {showExplanation && state?.explanation && (
                 <Card className="mt-8">
                     <CardHeader className="flex-row items-center gap-3">
                          <Lightbulb className="w-6 h-6 text-accent" />
