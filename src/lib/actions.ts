@@ -1,6 +1,7 @@
 'use server';
 
 import { playAIBasicOpponent } from '@/ai/flows/play-ai-basic-opponent';
+import { getAiExplanationFlow } from '@/ai/flows/get-ai-explanation';
 import { z } from 'zod';
 import { Chess } from 'chess.js';
 
@@ -46,20 +47,18 @@ export async function getAiMove(prevState: any, formData: FormData) {
     return { aiMove: null, error: e.message || "An error occurred validating history." };
   }
 
-  // Check if the user's move is valid *before* sending to AI
   const gameCopyForUserMove = new Chess(game.fen());
   if (gameCopyForUserMove.move(userMove) === null) {
     return { aiMove: null, error: `Invalid move: "${userMove}". Please enter a valid move in SAN (e.g., e4, Nf3).`};
   }
 
   try {
-    // The history sent to the AI should include the user's latest move.
+    const historyWithUserMove = [...history, userMove];
     const response = await playAIBasicOpponent({ 
       userMove: userMove,
-      history: [...history, userMove] 
+      history: historyWithUserMove,
     });
     
-    // Validate AI's move
     const gameCopyForAiMove = new Chess(gameCopyForUserMove.fen());
     if (!response.aiMove || gameCopyForAiMove.move(response.aiMove) === null) {
       console.error("AI returned invalid move:", response.aiMove, "for FEN:", gameCopyForAiMove.fen());
@@ -69,10 +68,37 @@ export async function getAiMove(prevState: any, formData: FormData) {
     return { aiMove: response.aiMove, error: null };
   } catch (error: any) {
     console.error("Error getting AI move:", error);
-    // Provide a more user-friendly error message
-    if (error.message && error.message.includes('GEMINI_API_KEY')) {
-        return { aiMove: null, error: "Missing API Key. Please set your GOOGLE_API_KEY in the .env file." };
+    if (error.message && (error.message.includes('GEMINI_API_KEY') || error.message.includes('GOOGLE_API_KEY'))) {
+        return { aiMove: null, error: "Missing or invalid API Key. Please set your GOOGLE_API_KEY in the .env file." };
     }
     return { aiMove: null, error: error.message || 'Failed to get a response from the AI. Please try again.' };
+  }
+}
+
+const learnSchema = z.object({
+  topic: z.string().min(3, { message: "Question must be at least 3 characters." }),
+});
+
+export async function getAiExplanation(prevState: any, formData: FormData) {
+  const validatedFields = learnSchema.safeParse({
+    topic: formData.get('topic'),
+  });
+
+  if (!validatedFields.success) {
+    return { 
+      explanation: null, 
+      error: validatedFields.error.flatten().fieldErrors.topic?.[0] || 'Invalid input.'
+    };
+  }
+
+  try {
+    const response = await getAiExplanationFlow({ topic: validatedFields.data.topic });
+    return { explanation: response.explanation, error: null };
+  } catch (error: any) {
+    console.error("Error getting AI explanation:", error);
+    if (error.message && (error.message.includes('GEMINI_API_KEY') || error.message.includes('GOOGLE_API_KEY'))) {
+        return { explanation: null, error: "Missing or invalid API Key. Please set your GOOGLE_API_KEY in the .env file." };
+    }
+    return { explanation: null, error: error.message || 'Failed to get a response from the AI. Please try again.' };
   }
 }

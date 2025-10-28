@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { BookOpen, Bot, Calendar, Users, Trophy, BookCopy } from 'lucide-react';
+import { BookOpen, Bot, Calendar, Users, Trophy, BookCopy, BrainCircuit } from 'lucide-react';
 import placeholderImages from '@/lib/placeholder-images.json';
 
 const features = [
@@ -17,6 +17,12 @@ const features = [
     description: 'Test your skills and practice new strategies against our AI opponent.',
     icon: <Bot className="h-8 w-8 text-primary" />,
     href: '/play'
+  },
+  {
+    title: 'Learn with AI',
+    description: 'Ask our AI expert about openings, strategies, and famous games.',
+    icon: <BrainCircuit className="h-8 w-8 text-primary" />,
+    href: '/learn'
   },
   {
     title: 'Study Openings',
