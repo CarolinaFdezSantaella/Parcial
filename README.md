@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Proyecto: Chess Hub
 
 Este es un proyecto de aplicación web de una sola página (SPA) con el objetivo de ser un punto de encuentro y utilidad para entusiastas del ajedrez.
@@ -87,3 +88,6 @@ Sigue estos pasos para ejecutar el proyecto en tu máquina.
         El inspector estará disponible en `http://localhost:4000`.
 
 5.  ¡Listo! Ahora puedes abrir `http://localhost:9002` en tu navegador y explorar la aplicación.
+=======
+# Parcial
+>>>>>>> 446ad7d5071e39ceff47b13adbb540127f4a40c3
