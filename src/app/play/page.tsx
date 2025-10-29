@@ -105,6 +105,36 @@ export default function PlayPage() {
             setGameOver({isGameOver: true, message});
         }
     }
+    
+    const augmentedFormAction = (formData: FormData) => {
+        const userMove = formData.get('move') as string;
+        if (!userMove) return;
+        
+        const gameCopy = new Chess(game.fen());
+        try {
+            if (gameCopy.move(userMove) === null) {
+                toast({
+                    variant: 'destructive',
+                    title: 'Invalid Move',
+                    description: `The move "${userMove}" is not valid. Please try again.`,
+                });
+                return;
+            }
+        } catch (e: any) {
+            toast({
+                variant: 'destructive',
+                title: 'Invalid Move Format',
+                description: e.message || `The move "${userMove}" could not be understood.`,
+            });
+            return;
+        }
+
+        const history = game.history();
+        formData.set('history', JSON.stringify(history));
+        formData.set('userMove', userMove);
+
+        formAction(formData);
+    }
 
     useEffect(() => {
         if (state?.error) {
@@ -138,35 +168,6 @@ export default function PlayPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [state]);
 
-    const handleFormAction = (formData: FormData) => {
-        const userMove = formData.get('move') as string;
-        if (!userMove) return;
-
-        const gameCopy = new Chess(game.fen());
-        try {
-            if (gameCopy.move(userMove) === null) {
-                toast({
-                    variant: 'destructive',
-                    title: 'Invalid Move',
-                    description: `The move "${userMove}" is not valid. Please try again.`,
-                });
-                return;
-            }
-        } catch (e: any) {
-            toast({
-                variant: 'destructive',
-                title: 'Invalid Move Format',
-                description: e.message || `The move "${userMove}" could not be understood.`,
-            });
-            return;
-        }
-
-        const history = game.history();
-        formData.set('history', JSON.stringify(history));
-        formData.set('userMove', userMove);
-
-        formAction(formData);
-    }
 
     return (
         <>
@@ -219,10 +220,7 @@ export default function PlayPage() {
                         </ScrollArea>
                     </CardContent>
                     <CardFooter className="flex-col items-stretch gap-4">
-                        <form onSubmit={(e) => {
-                                e.preventDefault();
-                                handleFormAction(new FormData(e.currentTarget));
-                            }} ref={formRef} className="w-full space-y-4">
+                        <form action={augmentedFormAction} ref={formRef} className="w-full space-y-4">
                              <input type="hidden" name="userMove" value={moveInputRef.current?.value || ''} />
                              <input type="hidden" name="history" />
                             <div className="flex flex-col sm:flex-row gap-2">
