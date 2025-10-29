@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { useUser, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection } from 'firebase/firestore';
-import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
+import { saveGameLog } from '@/lib/actions';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { NotebookText, CheckCircle } from 'lucide-react';
@@ -46,24 +46,7 @@ export default function MyGamesPage() {
   const firestore = useFirestore();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const [state, formAction, isPending] = useActionState(async (prevState, formData) => {
-    if (!user) {
-        return { ...initialState, error: { form: ['You must be logged in.'] } };
-    }
-
-    const gameLog = {
-        result: formData.get('result') as 'win' | 'loss' | 'draw',
-        duration: Number(formData.get('duration')),
-        openingMoves: formData.get('openingMoves') as string,
-        notes: formData.get('notes') as string,
-        date: Timestamp.now(),
-        userId: user.uid,
-    };
-    
-    addDocumentNonBlocking(collection(firestore, `users/${user.uid}/game_logs`), gameLog);
-
-    return { ...initialState, success: true, resetKey: Date.now().toString() };
-  }, initialState);
+  const [state, formAction, isPending] = useActionState(saveGameLog, initialState);
 
   const gameLogsQuery = useMemoFirebase(
     () => (user ? collection(firestore, `users/${user.uid}/game_logs`) : null),
@@ -75,7 +58,7 @@ export default function MyGamesPage() {
     if(state.success) {
         formRef.current?.reset();
     }
-  }, [state.success]);
+  }, [state.success, state.resetKey]);
 
 
   if (isUserLoading) {
@@ -139,16 +122,19 @@ export default function MyGamesPage() {
                       <SelectItem value="draw">Draw</SelectItem>
                     </SelectContent>
                   </Select>
+                  {state.error?.result && <p className="text-sm text-destructive mt-1">{state.error.result}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="duration">Duration (minutes)</Label>
                   <Input name="duration" type="number" placeholder="e.g., 30" required />
+                  {state.error?.duration && <p className="text-sm text-destructive mt-1">{state.error.duration}</p>}
                 </div>
 
                 <div>
                   <Label htmlFor="openingMoves">Opening Moves</Label>
                   <Input name="openingMoves" placeholder="e.g., 1. e4 e5 2. Nf3" required />
+                  {state.error?.openingMoves && <p className="text-sm text-destructive mt-1">{state.error.openingMoves}</p>}
                 </div>
 
                 <div>
@@ -161,6 +147,11 @@ export default function MyGamesPage() {
                     <div className="flex items-center gap-2 text-green-600 mt-2">
                         <CheckCircle className="w-5 h-5" />
                         <p>Game log saved successfully!</p>
+                    </div>
+                )}
+                 {state.error?.form && (
+                    <div className="flex items-center gap-2 text-destructive mt-2">
+                        <p>{state.error.form}</p>
                     </div>
                 )}
               </form>

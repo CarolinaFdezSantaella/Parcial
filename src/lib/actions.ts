@@ -4,6 +4,10 @@ import { playAIBasicOpponent } from '@/ai/flows/play-ai-basic-opponent';
 import { getAiExplanationFlow } from '@/ai/flows/get-ai-explanation';
 import { z } from 'zod';
 import { Chess } from 'chess.js';
+import { getFirestore, collection, addDoc, Timestamp } from 'firebase/firestore';
+import { initializeFirebase } from '@/firebase';
+import { getAuth } from 'firebase/auth';
+
 
 const playSchema = z.object({
   userMove: z.string().min(1),
@@ -105,13 +109,23 @@ export async function getAiExplanation(prevState: any, formData: FormData) {
 }
 
 const gameLogSchema = z.object({
-  result: z.enum(['win', 'loss', 'draw']),
-  duration: z.coerce.number().positive(),
-  openingMoves: z.string().min(1),
+  result: z.enum(['win', 'loss', 'draw'], { required_error: 'Please select a game result.'}),
+  duration: z.coerce.number({invalid_type_error: 'Duration must be a number.'}).positive({message: 'Duration must be a positive number.'}),
+  openingMoves: z.string().min(1, { message: "Opening moves are required."}),
   notes: z.string().optional(),
 });
 
 export async function saveGameLog(prevState: any, formData: FormData) {
+  const { auth, firestore } = initializeFirebase();
+  const user = auth.currentUser;
+
+  if (!user) {
+    return {
+      success: false,
+      error: { form: 'You must be logged in to save a game.' },
+      resetKey: Date.now().toString(),
+    }
+  }
   
   const validatedFields = gameLogSchema.safeParse({
     result: formData.get('result'),
@@ -122,21 +136,28 @@ export async function saveGameLog(prevState: any, formData: FormData) {
 
   if (!validatedFields.success) {
     const errors = validatedFields.error.flatten().fieldErrors;
-    const errorMessages = {
-      result: errors.result?.[0] ? "Please select a game result." : undefined,
-      duration: errors.duration?.[0] ? "Duration must be a positive number." : undefined,
-      openingMoves: errors.openingMoves?.[0] ? "Opening moves are required." : undefined,
-    }
-
     return { 
       success: false,
-      error: errorMessages,
+      error: errors,
+      resetKey: prevState.resetKey,
     };
   }
   
-  // This is where you would save the data to Firestore.
-  // We will add this logic in the next step.
-  console.log('Validated data:', validatedFields.data);
+  try {
+    const gameLog = {
+      ...validatedFields.data,
+      userId: user.uid,
+      date: Timestamp.now(),
+    };
+    const gameLogsCollection = collection(firestore, `users/${user.uid}/game_logs`);
+    await addDoc(gameLogsCollection, gameLog);
 
-  return { success: true, error: null };
+    return { success: true, error: null, resetKey: Date.now().toString() };
+  } catch (e: any) {
+    return {
+      success: false,
+      error: { form: e.message || 'An unexpected error occurred.' },
+      resetKey: Date.now().toString(),
+    }
+  }
 }
