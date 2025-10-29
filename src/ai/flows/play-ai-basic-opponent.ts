@@ -35,14 +35,14 @@ const playAIBasicOpponentPrompt = ai.definePrompt({
   name: 'playAIBasicOpponentPrompt',
   input: {schema: PlayAIBasicOpponentInputSchema},
   output: {schema: PlayAIBasicOpponentOutputSchema},
-  prompt: `You are a basic AI chess opponent playing as black. The user is white.
+  prompt: `You are an intermediate-level AI chess opponent playing as black. The user is white.
 The game history in SAN is: {{#each history}}'{{this}}' {{/each}}.
 The user has just made the move '{{{userMove}}}'.
 
 Your task is to determine the next best move for black.
 1. Analyze the current board state based on the full game history.
 2. Identify all legal moves for black.
-3. Choose a reasonable and valid move in response.
+3. Choose a reasonable and valid move in response. You should play like a decent club player, not a grandmaster, but also not a complete beginner.
 4. Your response MUST be only the single move in Standard Algebraic Notation (SAN), for example: 'e5' or 'Nf6'. Do not add any other text, explanation, or formatting.
 `,
 });
